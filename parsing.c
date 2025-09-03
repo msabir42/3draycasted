@@ -1,40 +1,41 @@
+
 #include "cub3d.h"
 
-void print_error(void)
+void print_error(char *message)
 {
-    write(2, "Error\n", 6); 
+    write(2, "Error\n", 6);
+    if (message)
+        write(2, message, ft_strlen(message));
 }
 
-int is_line(char *line)
+int is_empty_line(char *line)
 {
     int i = 0;
     if (!line)
-        return 0;
+        return 1;
     while (line[i])
     {
-        if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n'
-            && line[i] != '\r' && line[i] != '\v' && line[i] != '\f')
-            return 0; 
+        if (!ft_isspace(line[i]))
+            return 0;
         i++;
     }
-    return 1; 
+    return 1;
 }
-
-int check_file(char *file)
+int check_file(char *file,char* ext)
 {
     int fd;
     int len;
 
     len = ft_strlen(file);
-    if (len < 4 || ft_strncmp(file + len - 4, ".cub", 4) != 0)
+    if (len < 4 || ft_strncmp(file + len - 4, ext, 4) != 0)
     {
-        print_error();
+        print_error("Invalid extension");
         return 0;
     }
     fd = open(file, O_RDONLY);
     if (fd == -1)
     {
-        print_error();
+        print_error("File cant be open");
         return 0;
     }
     close(fd);
@@ -83,82 +84,172 @@ char **sanitize(char **string)
     return tmp;
 }
 
-int rgb_to_int(int r, int g, int b)
+
+int validate_rgb(int r, int g, int b)
 {
-    return (r << 16) | (g << 8) | b;
+    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+        return 0;
+    return 1;
 }
 
 int get_color(char *s)
 {
     if (!s)
-        return 0;
-
+        return -1; 
     char **rgb = ft_split(s, ',');
     if (!rgb)
-        return 0;
+        return -1;
+
+    
+    int count = 0;
+    while (rgb[count])
+        count++;
+    
+    if (count != 3)
+    {
+        ft_free(rgb, count);
+        return -1;
+    }
 
     int colors[3];
     int i = 0;
-    while (i < 3 && rgb[i])
+    while (i < 3)
     {
         colors[i] = ft_atoi(rgb[i]);
         i++;
     }
+    ft_free(rgb, count);
 
-    i = 0;
-    while (rgb[i])
-        free(rgb[i++]);
-    free(rgb);
+    if (!validate_rgb(colors[0], colors[1], colors[2]))
+        return -1;
 
     return rgb_to_int(colors[0], colors[1], colors[2]);
 }
 
-void get_metadata(char *line, t_data *data)
+int get_metadata(char *line, t_data *data)
 {
-    if (!line)
+    if (!line || is_empty_line(line))
+        return 1;
+
+    char **tokens = ft_split(line, ' ');
+    if (!tokens || !tokens[0])
     {
-        print_error();
-        return;
+        if (tokens) free(tokens);
+        return 1;
     }
 
-    char **meta = sanitize(ft_split(line, ' '));
-    if (!meta || !meta[0] || !meta[1])
-        return;
 
-    if (ft_strncmp(meta[0], "NO", 3) == 0)
-        data->north_texture_path = ft_strdup(meta[1]);
-    else if (ft_strncmp(meta[0], "SO", 3) == 0)
-        data->south_texture_path = ft_strdup(meta[1]);
-    else if (ft_strncmp(meta[0], "WE", 3) == 0)
-        data->west_texture_path = ft_strdup(meta[1]);
-    else if (ft_strncmp(meta[0], "EA", 3) == 0)
-        data->east_texture_path = ft_strdup(meta[1]);
-    else if (ft_strncmp(meta[0], "F", 2) == 0)
-        data->floor_color = get_color(meta[1]);
-    else if (ft_strncmp(meta[0], "C", 2) == 0)
-        data->ceiling_color = get_color(meta[1]);
+    if (!tokens[1])
+    {
+        ft_free(tokens, 1);
+        return 1;
+    }
 
+    int result = 1;
+    
+    if (ft_strncmp(tokens[0], "NO", 3) == 0 && !data->north_texture_path && !check_file(tokens[1],".xpm"))
+        data->north_texture_path = ft_strdup(tokens[1]);
+    else if (ft_strncmp(tokens[0], "SO", 3) == 0 && !data->south_texture_path && !check_file(tokens[1],".xpm"))
+        data->south_texture_path = ft_strdup(tokens[1]);
+    else if (ft_strncmp(tokens[0], "WE", 3) == 0 && !data->west_texture_path && !check_file(tokens[1],".xpm"))
+        data->west_texture_path = ft_strdup(tokens[1]);
+    else if (ft_strncmp(tokens[0], "EA", 3) == 0 && !data->east_texture_path && !check_file(tokens[1],".xpm"))
+        data->east_texture_path = ft_strdup(tokens[1]);
+    else if (ft_strncmp(tokens[0], "F", 2) == 0 && data->floor_color == -1)
+        data->floor_color = get_color(tokens[1]);
+    else if (ft_strncmp(tokens[0], "C", 2) == 0 && data->ceiling_color == -1)
+        data->ceiling_color = get_color(tokens[1]);
+    else
+    {
+        print_error("Duplicate or invalid metadata\n");
+        result = 0;
+    }
     int i = 0;
-    while (meta[i])
-        free(meta[i++]);
-    free(meta);
+    while (tokens[i])
+        i++;
+    ft_free(tokens, i);
+    
+    return result;
 }
+void init_data(t_data *data)
+{
+    data->north_texture_path = NULL;
+    data->south_texture_path = NULL;
+    data->west_texture_path = NULL;
+    data->east_texture_path = NULL;
+    data->floor_color = -1;
+    data->ceiling_color = -1;
+    data->map = NULL;
+    data->map_width = 0;
+    data->map_height = 0;
+    data->player_start_x = -1;
+    data->player_start_y = -1;
+    data->player_start_direction = '\0';
+    data->player_found = 0;
+}
+
+
+int validate_metadata(t_data *data)
+{
+    if (!data->north_texture_path || !data->south_texture_path ||
+        !data->west_texture_path || !data->east_texture_path ||
+        data->floor_color == -1 || data->ceiling_color == -1)
+    {
+        print_error("Missing required metadata\n");
+        return 0;
+    }
+    return 1;
+}
+
 
 int fetch_lines(char *file, t_data *data)
 {
-    if (!check_file(file))
+    if (!check_file(file, ".cub"))
         return 0;
 
     int fd = open(file, O_RDONLY);
-    char *line = get_next_line(fd);
-
-    while (line != NULL)
+    if (fd == -1)
     {
-        get_metadata(line, data);
-        free(line);
-        line = get_next_line(fd);
+        print_error("Failed to open file\n");
+        return 0;
     }
 
+    char *line;
+    int metadata_complete = 0;
+    int line_number = 0;
+
+
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        line_number++;
+        
+        if (is_empty_line(line))
+        {
+            free(line);
+            continue;
+        }
+        
+        if (!get_metadata(line, data))
+        {
+            free(line);
+            close(fd);
+            return 0;
+        }
+        free(line);
+        if (data->north_texture_path && data->south_texture_path &&
+            data->west_texture_path && data->east_texture_path &&
+            data->floor_color != -1 && data->ceiling_color != -1)
+        {
+            metadata_complete = 1;
+            break;
+        }
+    }
+    if (!metadata_complete)
+    {
+        print_error("Incomplete metadata\n");
+        close(fd);
+        return 0;
+    }
     close(fd);
     return 1;
 }
