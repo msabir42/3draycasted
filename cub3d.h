@@ -11,24 +11,9 @@
 # include <string.h>
 # include <math.h>
 
-// Configuration constants
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 42
 # endif
-
-# define SUCCESS 0
-# define ERROR 1
-# define MAP_CHARS "01NSEW "
-# define PLAYER_CHARS "NSEW"
-
-// Error messages
-# define ERR_FILE_OPEN "Could not open file"
-# define ERR_FILE_EXT "Invalid file extension"
-# define ERR_MAP "Invalid map"
-# define ERR_TEXTURE "Invalid texture"
-# define ERR_COLOR "Invalid color"
-# define ERR_MEMORY "Memory allocation failed"
-# define ERR_PLAYER "Invalid player configuration"
 
 typedef struct s_data
 {
@@ -66,9 +51,10 @@ char	**ft_split(char const *s, char c);
 void    ft_free(char **strs, int count);
 int     ft_atoi(const char *str);
 void    *ft_calloc(size_t count, size_t size);
+int     ft_strcnmp(const char *s1, const char* s2, int n);
 
 // File parsing
-int     check_file(char *file);
+int     check_file(char *file, char *ext);
 int     fetch_lines(char *file, t_data *data);
 int     get_color(char *s);
 int     rgb_to_int(int r, int g, int b);
@@ -76,10 +62,18 @@ int     validate_rgb(int r, int g, int b);
 void    init_data(t_data *data);
 int     validate_metadata(t_data *data);
 void    print_data(t_data *data);
-
+int     get_metadata(char *line, t_data *data);
+int     spaced_string(char *s);
+char    **sanitize(char **string);
 
 // GNL functions
 char	*get_next_line(int fd);
 int		check_newline(char *s);
+
+// Map validation
+int     is_pos(char **map, int map_height);
+int     is_valid(char **map, int map_height);
+int     is_closed(char **map, int map_height, int x, int y);
+void    get_coordinates(t_data *Map, char **map, int map_height);
 
 #endif

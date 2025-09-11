@@ -1,4 +1,3 @@
-
 #include "cub3d.h"
 
 void print_error(char *message)
@@ -21,7 +20,8 @@ int is_empty_line(char *line)
     }
     return 1;
 }
-int check_file(char *file,char* ext)
+
+int check_file(char *file, char *ext)
 {
     int fd;
     int len;
@@ -84,7 +84,6 @@ char **sanitize(char **string)
     return tmp;
 }
 
-
 int validate_rgb(int r, int g, int b)
 {
     if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
@@ -100,7 +99,6 @@ int get_color(char *s)
     if (!rgb)
         return -1;
 
-    
     int count = 0;
     while (rgb[count])
         count++;
@@ -138,7 +136,6 @@ int get_metadata(char *line, t_data *data)
         return 1;
     }
 
-
     if (!tokens[1])
     {
         ft_free(tokens, 1);
@@ -147,13 +144,13 @@ int get_metadata(char *line, t_data *data)
 
     int result = 1;
     
-    if (ft_strncmp(tokens[0], "NO", 3) == 0 && !data->north_texture_path && !check_file(tokens[1],".xpm"))
+    if (ft_strncmp(tokens[0], "NO", 3) == 0 && !data->north_texture_path && check_file(tokens[1], ".xpm"))
         data->north_texture_path = ft_strdup(tokens[1]);
-    else if (ft_strncmp(tokens[0], "SO", 3) == 0 && !data->south_texture_path && !check_file(tokens[1],".xpm"))
+    else if (ft_strncmp(tokens[0], "SO", 3) == 0 && !data->south_texture_path && check_file(tokens[1], ".xpm"))
         data->south_texture_path = ft_strdup(tokens[1]);
-    else if (ft_strncmp(tokens[0], "WE", 3) == 0 && !data->west_texture_path && !check_file(tokens[1],".xpm"))
+    else if (ft_strncmp(tokens[0], "WE", 3) == 0 && !data->west_texture_path && check_file(tokens[1], ".xpm"))
         data->west_texture_path = ft_strdup(tokens[1]);
-    else if (ft_strncmp(tokens[0], "EA", 3) == 0 && !data->east_texture_path && !check_file(tokens[1],".xpm"))
+    else if (ft_strncmp(tokens[0], "EA", 3) == 0 && !data->east_texture_path && check_file(tokens[1], ".xpm"))
         data->east_texture_path = ft_strdup(tokens[1]);
     else if (ft_strncmp(tokens[0], "F", 2) == 0 && data->floor_color == -1)
         data->floor_color = get_color(tokens[1]);
@@ -164,6 +161,7 @@ int get_metadata(char *line, t_data *data)
         print_error("Duplicate or invalid metadata\n");
         result = 0;
     }
+    
     int i = 0;
     while (tokens[i])
         i++;
@@ -171,6 +169,7 @@ int get_metadata(char *line, t_data *data)
     
     return result;
 }
+
 void init_data(t_data *data)
 {
     data->north_texture_path = NULL;
@@ -188,7 +187,6 @@ void init_data(t_data *data)
     data->player_found = 0;
 }
 
-
 int validate_metadata(t_data *data)
 {
     if (!data->north_texture_path || !data->south_texture_path ||
@@ -200,7 +198,6 @@ int validate_metadata(t_data *data)
     }
     return 1;
 }
-
 
 int fetch_lines(char *file, t_data *data)
 {
@@ -217,7 +214,6 @@ int fetch_lines(char *file, t_data *data)
     char *line;
     int metadata_complete = 0;
     int line_number = 0;
-
 
     while ((line = get_next_line(fd)) != NULL)
     {
@@ -244,12 +240,53 @@ int fetch_lines(char *file, t_data *data)
             break;
         }
     }
+    
     if (!metadata_complete)
     {
         print_error("Incomplete metadata\n");
         close(fd);
         return 0;
     }
+    
+    // Read map lines
+    int map_lines = 0;
+    char *map_lines_arr[1024]; // Max 1024 map lines
+    
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        if (!is_empty_line(line))
+        {
+            map_lines_arr[map_lines] = ft_strdup(line);
+            map_lines++;
+        }
+        free(line);
+    }
+    
     close(fd);
+    
+    // Store map in data structure
+    if (map_lines > 0)
+    {
+        data->map = malloc(sizeof(char *) * (map_lines + 1));
+        if (!data->map)
+            return 0;
+        
+        for (int i = 0; i < map_lines; i++)
+        {
+            data->map[i] = map_lines_arr[i];
+        }
+        data->map[map_lines] = NULL;
+        data->map_height = map_lines;
+        
+        // Find map width
+        data->map_width = 0;
+        for (int i = 0; i < map_lines; i++)
+        {
+            int len = ft_strlen(data->map[i]);
+            if (len > data->map_width)
+                data->map_width = len;
+        }
+    }
+    
     return 1;
 }
