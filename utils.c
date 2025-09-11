@@ -39,6 +39,7 @@ char **ft_split(const char *s, char c)
     return (res);
 }
 
+
 static void ft_initiate_vars(size_t *i, int *j, int *s_word)
 {
     *i = 0;
