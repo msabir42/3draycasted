@@ -30,7 +30,10 @@ char **ft_split(const char *s, char c)
         {
             res[j] = fill_word(s, s_word, i);
             if (!(res[j]))
-                return (ft_free(res, j));
+            {
+                ft_free(res, j);  // Call ft_free but don't return its value
+                return (NULL);     // Return NULL directly
+            }
             s_word = -1;
             j++;
         }

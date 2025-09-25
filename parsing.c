@@ -27,15 +27,16 @@ int check_file(char *file, char *ext)
     int len;
 
     len = ft_strlen(file);
+    // CORRECTED LOGIC: Check if file ends with the expected extension
     if (len < 4 || ft_strncmp(file + len - 4, ext, 4) != 0)
     {
-        print_error("Invalid extension");
+        print_error("Invalid extension\n");
         return 0;
     }
     fd = open(file, O_RDONLY);
     if (fd == -1)
     {
-        print_error("File cant be open");
+        print_error("File cant be open\n");
         return 0;
     }
     close(fd);
@@ -144,13 +145,14 @@ int get_metadata(char *line, t_data *data)
 
     int result = 1;
     
-    if (ft_strncmp(tokens[0], "NO", 3) == 0 && !data->north_texture_path && check_file(tokens[1], ".xpm"))
+    // Texture paths - no extension check to allow flexibility
+    if (ft_strncmp(tokens[0], "NO", 3) == 0 && !data->north_texture_path)
         data->north_texture_path = ft_strdup(tokens[1]);
-    else if (ft_strncmp(tokens[0], "SO", 3) == 0 && !data->south_texture_path && check_file(tokens[1], ".xpm"))
+    else if (ft_strncmp(tokens[0], "SO", 3) == 0 && !data->south_texture_path)
         data->south_texture_path = ft_strdup(tokens[1]);
-    else if (ft_strncmp(tokens[0], "WE", 3) == 0 && !data->west_texture_path && check_file(tokens[1], ".xpm"))
+    else if (ft_strncmp(tokens[0], "WE", 3) == 0 && !data->west_texture_path)
         data->west_texture_path = ft_strdup(tokens[1]);
-    else if (ft_strncmp(tokens[0], "EA", 3) == 0 && !data->east_texture_path && check_file(tokens[1], ".xpm"))
+    else if (ft_strncmp(tokens[0], "EA", 3) == 0 && !data->east_texture_path)
         data->east_texture_path = ft_strdup(tokens[1]);
     else if (ft_strncmp(tokens[0], "F", 2) == 0 && data->floor_color == -1)
         data->floor_color = get_color(tokens[1]);
