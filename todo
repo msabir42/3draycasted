@@ -1,0 +1,5 @@
+synchronize player's movement and rotation add a key release function
+correct wall drawing when in a very close position to the wall
+add rotation with mouse
+complete minimap
+

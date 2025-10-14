@@ -1,7 +1,15 @@
 NAME = cube
 
 SRCS = main.c\
-	
+	raycasting/init_environment.c\
+	raycasting/mlx_init.c\
+	raycasting/player.c\
+	raycasting/player_movement.c\
+	raycasting/player_rotation.c\
+	raycasting/intersections.c\
+	raycasting/raycasting.c\
+	rendering/walls.c
+
 
 OBJS = $(SRCS:.c=.o)
 
