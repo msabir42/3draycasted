@@ -34,16 +34,18 @@ void draw_slice_to_screen(t_game *game, double ray_angle, int x, int color)
     t_ray ray;
     t_intersect final_hit;
     double wall_height;
+    double player_angle;
 
     while(ray_angle < 0)
         ray_angle += 2 * M_PI;
     while(ray_angle > 2 * M_PI)
         ray_angle -= 2 * M_PI;
-    
+    player_angle = atan2(game->player.dir_y, game->player.dir_x);
     ray.angle = ray_angle;
     ray.found_wall = false;
     ray_direction(&ray);
     final_hit = calculate_distance(game, &game->player, &ray);
+    ray.dist *= cos(player_angle - ray_angle);
     if(ray.found_wall)
     {
         wall_height = wall_projection_height(&ray);
