@@ -27,7 +27,7 @@ int check_file(char *file, char *ext)
     int len;
 
     len = ft_strlen(file);
-    // CORRECTED LOGIC: Check if file ends with the expected extension
+
     if (len < 4 || ft_strncmp(file + len - 4, ext, 4) != 0)
     {
         print_error("Invalid extension\n");
@@ -250,9 +250,8 @@ int fetch_lines(char *file, t_data *data)
         return 0;
     }
     
-    // Read map lines
     int map_lines = 0;
-    char *map_lines_arr[1024]; // Max 1024 map lines
+    char *map_lines_arr[1024]; 
     
     while ((line = get_next_line(fd)) != NULL)
     {

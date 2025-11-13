@@ -1,41 +1,52 @@
 #include "cub3d.h"
 
-int main(int argc, char** argv)
+void init_data(t_data *data)
 {
-    t_data data;
-    
-    if (argc != 2)
+    data->ceiling_color =  0xFFFFF8F8;
+    data->floor_color = 0xFFFF82B2;
+    data->player_start_direction = 'N';
+    data->player_start_x = 8;
+    data->player_start_y = 5;
+    int map[MAP_HEIGHT][MAP_WIDTH] = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1},
+        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+        {1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    };
+    int i = 0;
+    while (i < MAP_HEIGHT)
     {
-        printf("Usage: %s <map.cub>\n", argv[0]);
-        return 1;
+        int j = 0;
+        while (j < MAP_WIDTH)
+        {
+            data->map[i][j] = map[i][j];
+            j++;
+        }
+        i++;
     }
+}
+int main()
+{
+    t_game *game;
     
-    init_data(&data);
-    if (!fetch_lines(argv[1], &data))
-    {
-        printf("Error parsing file\n");
-        return 1;
-    }
-    
-    if (!validate_metadata(&data))
-    {
-        printf("Invalid metadata\n");
-        return 1;
-    }
-    
-    print_data(&data);
-    
-    // Clean up
-    if (data.north_texture_path) free(data.north_texture_path);
-    if (data.south_texture_path) free(data.south_texture_path);
-    if (data.west_texture_path) free(data.west_texture_path);
-    if (data.east_texture_path) free(data.east_texture_path);
-    if (data.map)
-    {
-        for (int i = 0; data.map[i]; i++)
-            free(data.map[i]);
-        free(data.map);
-    }
-    
+    game = malloc(sizeof(t_game));
+    init_data(&game->data);
+    init_player(&game->player, &game->data);
+    init_game(game, game->data, game->player);
+    mlx_hook(game->mlx.win, 2, 1L<<0, key_press, game);
+    draw_background(game, game->data.ceiling_color, game->data.floor_color);
+    // draw_map(game);
+    // draw_player(&game->player, game);
+    // cast_all_rays(game);
+    draw_walls(game);
+    mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
+    mlx_loop(game->mlx.mlx);
     return 0;
 }
+
