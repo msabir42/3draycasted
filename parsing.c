@@ -94,35 +94,152 @@ int validate_rgb(int r, int g, int b)
 
 int get_color(char *s)
 {
+    char **rgb;
+    int r, g, b;
+    int color;
+
     if (!s)
-        return -1; 
-    char **rgb = ft_split(s, ',');
-    if (!rgb)
         return -1;
-
-    int count = 0;
-    while (rgb[count])
-        count++;
+    rgb = ft_split(s, ',');
+    if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3]) // Added check for rgb[3] to ensure exactly 3 values
+        return -1;
     
-    if (count != 3)
-    {
-        ft_free(rgb, count);
+    r = ft_atoi(rgb[0]);
+    g = ft_atoi(rgb[1]);
+    b = ft_atoi(rgb[2]);
+    
+    ft_free(rgb, 3);
+    
+    if (!validate_rgb(r, g, b))
         return -1;
-    }
+    
+    color = rgb_to_int(r, g, b);
+    return color;
+}
 
-    int colors[3];
+int is_map_line(char *line)
+{
     int i = 0;
-    while (i < 3)
+    
+    if (!line || is_empty_line(line))
+        return 0;
+        
+    while (line[i])
     {
-        colors[i] = ft_atoi(rgb[i]);
+        if (!ft_isspace(line[i]) && 
+            line[i] != '0' && line[i] != '1' && 
+            line[i] != 'N' && line[i] != 'S' && 
+            line[i] != 'E' && line[i] != 'W' && 
+            line[i] != ' ')
+            return 0;
         i++;
     }
-    ft_free(rgb, count);
+    return 1;
+}
 
-    if (!validate_rgb(colors[0], colors[1], colors[2]))
-        return -1;
+int parse_map_line(char *line, t_data *data, int row)
+{
+    int i = 0;
+    int col = 0;
+    
+    while (line[i] && col < MAP_WIDTH)
+    {
+        if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+        {
+            if (data->player_found)
+            {
+                print_error("Multiple player starting positions\n");
+                return 0;
+            }
+            data->player_start_x = col;
+            data->player_start_y = row;
+            data->player_start_direction = line[i];
+            data->player_found = 1;
+            data->map[row][col] = 0; // Player stands on walkable tile
+        }
+        else if (line[i] == ' ')
+        {
+            data->map[row][col] = 1; // Treat spaces as walls
+        }
+        else if (line[i] == '0' || line[i] == '1')
+        {
+            data->map[row][col] = line[i] - '0';
+        }
+        else if (!ft_isspace(line[i]))
+        {
+            print_error("Invalid character in map\n");
+            return 0;
+        }
+        
+        if (!ft_isspace(line[i]))
+            col++;
+        i++;
+    }
+    
+    // Fill remaining columns with walls
+    while (col < MAP_WIDTH)
+    {
+        data->map[row][col] = 1;
+        col++;
+    }
+    
+    return 1;
+}
 
-    return rgb_to_int(colors[0], colors[1], colors[2]);
+int check_closed_walls(t_data *data)
+{
+    // Check all four borders are solid walls (value 1)
+    for (int x = 0; x < MAP_WIDTH; x++)
+    {
+        if (data->map[0][x] != 1) // Top border
+        {
+            print_error("Top border not completely closed with walls\n");
+            return 0;
+        }
+        if (data->map[MAP_HEIGHT - 1][x] != 1) // Bottom border
+        {
+            print_error("Bottom border not completely closed with walls\n");
+            return 0;
+        }
+    }
+    
+    for (int y = 0; y < MAP_HEIGHT; y++)
+    {
+        if (data->map[y][0] != 1) // Left border
+        {
+            print_error("Left border not completely closed with walls\n");
+            return 0;
+        }
+        if (data->map[y][MAP_WIDTH - 1] != 1) // Right border
+        {
+            print_error("Right border not completely closed with walls\n");
+            return 0;
+        }
+    }
+    
+    return 1;
+}
+
+int validate_map(t_data *data)
+{
+    if (!data->player_found)
+    {
+        print_error("No player starting position found\n");
+        return 0;
+    }
+    
+    if (data->player_start_x == 0 || data->player_start_x == MAP_WIDTH - 1 ||
+        data->player_start_y == 0 || data->player_start_y == MAP_HEIGHT - 1)
+    {
+        print_error("Player cannot be on map border\n");
+        return 0;
+    }
+    
+    // Add closed walls validation
+    if (!check_closed_walls(data))
+        return 0;
+    
+    return 1;
 }
 
 int get_metadata(char *line, t_data *data)
@@ -145,7 +262,7 @@ int get_metadata(char *line, t_data *data)
 
     int result = 1;
     
-    // Texture paths - no extension check to allow flexibility
+    // Texture paths
     if (ft_strncmp(tokens[0], "NO", 3) == 0 && !data->north_texture_path)
         data->north_texture_path = ft_strdup(tokens[1]);
     else if (ft_strncmp(tokens[0], "SO", 3) == 0 && !data->south_texture_path)
@@ -158,6 +275,12 @@ int get_metadata(char *line, t_data *data)
         data->floor_color = get_color(tokens[1]);
     else if (ft_strncmp(tokens[0], "C", 2) == 0 && data->ceiling_color == -1)
         data->ceiling_color = get_color(tokens[1]);
+    else if (is_map_line(line)) // If it looks like map data but we're still in metadata section
+    {
+        // This means map started before metadata was complete
+        print_error("Map started before metadata was complete\n");
+        result = 0;
+    }
     else
     {
         print_error("Duplicate or invalid metadata\n");
@@ -180,13 +303,21 @@ void init_data(t_data *data)
     data->east_texture_path = NULL;
     data->floor_color = -1;
     data->ceiling_color = -1;
-    data->map = NULL;
     data->map_width = 0;
     data->map_height = 0;
     data->player_start_x = -1;
     data->player_start_y = -1;
     data->player_start_direction = '\0';
     data->player_found = 0;
+    
+    // Initialize map with walls
+    for (int i = 0; i < MAP_HEIGHT; i++)
+    {
+        for (int j = 0; j < MAP_WIDTH; j++)
+        {
+            data->map[i][j] = 1;
+        }
+    }
 }
 
 int validate_metadata(t_data *data)
@@ -216,10 +347,16 @@ int fetch_lines(char *file, t_data *data)
     char *line;
     int metadata_complete = 0;
     int line_number = 0;
+    int map_row = 0;
+    int map_started = 0;
 
     while ((line = get_next_line(fd)) != NULL)
     {
         line_number++;
+        
+        // Remove trailing newline
+        char *newline = ft_strchr(line, '\n');
+        if (newline) *newline = '\0';
         
         if (is_empty_line(line))
         {
@@ -227,67 +364,64 @@ int fetch_lines(char *file, t_data *data)
             continue;
         }
         
-        if (!get_metadata(line, data))
+        if (!metadata_complete && !map_started)
         {
-            free(line);
-            close(fd);
-            return 0;
+            if (!get_metadata(line, data))
+            {
+                free(line);
+                close(fd);
+                return 0;
+            }
+            
+            // Check if all metadata is complete
+            if (data->north_texture_path && data->south_texture_path &&
+                data->west_texture_path && data->east_texture_path &&
+                data->ceiling_color != -1 && data->floor_color != -1)
+            {
+                metadata_complete = 1;
+            }
+        }
+        else
+        {
+            // We're either in metadata section with complete metadata, or map has started
+            if (is_map_line(line))
+            {
+                map_started = 1;
+                if (map_row >= MAP_HEIGHT)
+                {
+                    print_error("Map is too tall\n");
+                    free(line);
+                    close(fd);
+                    return 0;
+                }
+                
+                if (!parse_map_line(line, data, map_row))
+                {
+                    free(line);
+                    close(fd);
+                    return 0;
+                }
+                map_row++;
+            }
+            else if (!metadata_complete)
+            {
+                // This line doesn't look like map data and we don't have complete metadata
+                print_error("Invalid line in file\n");
+                free(line);
+                close(fd);
+                return 0;
+            }
         }
         free(line);
-        if (data->north_texture_path && data->south_texture_path &&
-            data->west_texture_path && data->east_texture_path &&
-            data->floor_color != -1 && data->ceiling_color != -1)
-        {
-            metadata_complete = 1;
-            break;
-        }
     }
-    
-    if (!metadata_complete)
-    {
-        print_error("Incomplete metadata\n");
-        close(fd);
-        return 0;
-    }
-    
-    int map_lines = 0;
-    char *map_lines_arr[1024]; 
-    
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        if (!is_empty_line(line))
-        {
-            map_lines_arr[map_lines] = ft_strdup(line);
-            map_lines++;
-        }
-        free(line);
-    }
-    
+
     close(fd);
     
-    // Store map in data structure
-    if (map_lines > 0)
-    {
-        data->map = malloc(sizeof(char *) * (map_lines + 1));
-        if (!data->map)
-            return 0;
-        
-        for (int i = 0; i < map_lines; i++)
-        {
-            data->map[i] = map_lines_arr[i];
-        }
-        data->map[map_lines] = NULL;
-        data->map_height = map_lines;
-        
-        // Find map width
-        data->map_width = 0;
-        for (int i = 0; i < map_lines; i++)
-        {
-            int len = ft_strlen(data->map[i]);
-            if (len > data->map_width)
-                data->map_width = len;
-        }
-    }
-    
+    if (!validate_metadata(data))
+        return 0;
+
+    if (!validate_map(data))
+        return 0;
+
     return 1;
 }

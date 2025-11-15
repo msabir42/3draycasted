@@ -1,52 +1,47 @@
 #include "cub3d.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-void init_data(t_data *data)
-{
-    data->ceiling_color =  0xFFFFF8F8;
-    data->floor_color = 0xFFFF82B2;
-    data->player_start_direction = 'N';
-    data->player_start_x = 8;
-    data->player_start_y = 5;
-    int map[MAP_HEIGHT][MAP_WIDTH] = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1},
-        {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    };
-    int i = 0;
-    while (i < MAP_HEIGHT)
-    {
-        int j = 0;
-        while (j < MAP_WIDTH)
-        {
-            data->map[i][j] = map[i][j];
-            j++;
-        }
-        i++;
-    }
-}
-int main()
+
+int main(int argc, char **argv)
 {
     t_game *game;
-    
+    char *map_file;
+
+    if (argc != 2)
+    {
+        print_error("Usage: ./cube map.cub\n");
+        return 1;
+    }
+
+    map_file = argv[1];
     game = malloc(sizeof(t_game));
+    if (!game)
+    {
+        print_error("Malloc failed\n");
+        return 1;
+    }
+
     init_data(&game->data);
+    
+    if (!fetch_lines(map_file, &game->data))
+    {
+        print_error("Failed to parse map\n");
+        free(game);
+        return 1;
+    }
+
     init_player(&game->player, &game->data);
+    printf("Floor color: 0x%X\n", game->data.floor_color);
+    printf("Ceiling color: 0x%X\n", game->data.ceiling_color);  
     init_game(game, game->data, game->player);
     mlx_hook(game->mlx.win, 2, 1L<<0, key_press, game);
     draw_background(game, game->data.ceiling_color, game->data.floor_color);
-    // draw_map(game);
-    // draw_player(&game->player, game);
-    // cast_all_rays(game);
     draw_walls(game);
     mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
     mlx_loop(game->mlx.mlx);
+    
+    free(game);
     return 0;
 }
 

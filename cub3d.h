@@ -13,14 +13,25 @@
 # include <stdbool.h>
 
 #define TILE_SIZE 60
-#define MAP_WIDTH 16
-#define MAP_HEIGHT 10
+#define MAP_WIDTH 25
+#define MAP_HEIGHT 20
+#define TEX_WIDTH  64
+#define TEX_HEIGHT 64
 #define SCREEN_W  (MAP_WIDTH * TILE_SIZE)
 #define SCREEN_H  (MAP_HEIGHT * TILE_SIZE)
 #define FOV (M_PI / 3)
 #define NUM_RAYS SCREEN_W
 
-    
+typedef struct s_texture
+{
+    void    *img;
+    char    *addr;
+    int     width;
+    int     height;
+    int     bpp;
+    int     line_len;
+    int     endian;
+} t_texture;
 
 typedef struct s_data
 {
@@ -69,6 +80,10 @@ typedef struct s_game
     t_mlx mlx;
     t_data data;
     t_player player;
+    t_texture north_tex;
+    t_texture south_tex;
+    t_texture west_tex;
+    t_texture east_tex;
 } t_game;
 
 typedef struct s_intersect
@@ -95,6 +110,37 @@ typedef struct s_ray
     bool found_wall;
     double dist;
 } t_ray;
+
+/* parsing.c prototypes */
+void print_error(char *message);
+int fetch_lines(char *file, t_data *data);
+int check_file(char *file, char *ext);
+int is_empty_line(char *line);
+int get_metadata(char *line, t_data *data);
+int validate_metadata(t_data *data);
+int get_color(char *s);
+int validate_rgb(int r, int g, int b);
+void init_data(t_data *data);
+int is_map_line(char *line);
+int parse_map_line(char *line, t_data *data, int row);
+int validate_map(t_data *data);
+int check_closed_walls(t_data *data);
+
+/* utils.c prototypes */
+char **ft_split(const char *s, char c);
+void ft_free(char **strs, int count);
+int ft_atoi(const char *str);
+void *ft_calloc(size_t count, size_t size);
+int ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t ft_strlen(const char *s);
+char *ft_strdup(const char *s);
+size_t ft_strlcpy(char *dst, const char *src, size_t dstsize);
+int rgb_to_int(int r, int g, int b);
+int check_newline(char *s);
+int ft_isspace(int c);
+char *get_next_line(int fd);
+char *ft_strchr(const char *s, int c);
+
 
 //raycasting
 void init_game(t_game *game, t_data data, t_player p);

@@ -177,7 +177,7 @@ size_t ft_strlcpy(char *dst, const char *src, size_t dstsize)
 
 int rgb_to_int(int r, int g, int b)
 {
-    return (r << 16) | (g << 8) | b;
+    return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
 }
 
 int check_newline(char *s)
@@ -191,4 +191,82 @@ int check_newline(char *s)
         s++;
     }
     return 0;
+}
+
+// c
+size_t ft_strlen(const char *s)
+{
+    size_t len = 0;
+    if (!s)
+        return 0;
+    while (s[len])
+        len++;
+    return len;
+}
+
+char *ft_strdup(const char *s)
+{
+    char *dup;
+    size_t len;
+
+    if (!s)
+        return NULL;
+    len = ft_strlen(s);
+    dup = malloc(len + 1);
+    if (!dup)
+        return NULL;
+    ft_strlcpy(dup, s, len + 1);
+    return dup;
+}
+
+char *get_next_line(int fd)
+{
+    char buffer[1];
+    char *line = NULL;
+    size_t len = 0;
+    size_t capacity = 128;
+
+    line = malloc(capacity);
+    if (!line)
+        return NULL;
+
+    while (read(fd, buffer, 1) > 0)
+    {
+        if (len + 1 >= capacity)
+        {
+            capacity *= 2;
+            char *tmp = realloc(line, capacity);
+            if (!tmp)
+            {
+                free(line);
+                return NULL;
+            }
+            line = tmp;
+        }
+        line[len++] = buffer[0];
+        if (buffer[0] == '\n')
+            break;
+    }
+
+    if (len == 0)
+    {
+        free(line);
+        return NULL;
+    }
+
+    line[len] = '\0';
+    return line;
+}
+
+char *ft_strchr(const char *s, int c)
+{
+    while (*s)
+    {
+        if (*s == (char)c)
+            return (char *)s;
+        s++;
+    }
+    if ((char)c == '\0')
+        return (char *)s;
+    return NULL;
 }
