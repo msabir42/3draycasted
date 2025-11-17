@@ -41,7 +41,10 @@ int load_all_textures(t_game *game)
         return 0;
     
     if (!load_single_texture(game, &game->north_tex, game->data.north_texture_path, "North"))
+    {
+        free_textures(game);
         return 0;
+    }
     if (!load_single_texture(game, &game->south_tex, game->data.south_texture_path, "South"))
     {
         free_textures(game);
