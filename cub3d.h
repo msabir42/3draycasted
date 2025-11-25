@@ -12,7 +12,7 @@
 # include "minilibx-linux/mlx.h" 
 # include <stdbool.h>
 
-#define TILE_SIZE 60
+#define TILE_SIZE 30
 #define MAP_WIDTH 25
 #define MAP_HEIGHT 20
 #define TEX_WIDTH  64
@@ -109,6 +109,7 @@ typedef struct s_ray
     t_intersect h_intersect;
     bool found_wall;
     double dist;
+    int side; // 0 = vertical, 1 = horizontal - ADD THIS
 } t_ray;
 
 /* parsing.c prototypes */
@@ -161,4 +162,11 @@ void ray_vertical_intersection(t_player *p, t_ray *ray, t_intersect *inter);
 void ray_horizontal_intersection(t_player *p, t_ray *ray, t_intersect *inter);
 t_intersect calculate_distance(t_game *game, t_player *p, t_ray *ray);
 
+
+//textures
+int load_single_texture(t_game *game, t_texture *tex, char *path, char *name);
+int load_all_textures(t_game *game);
+void free_textures(t_game* game);
+int get_texture_color(t_texture *tex, int x, int y);
+void draw_textured_slice(t_game *game, int x, double wall_height, t_intersect hit, t_ray *ray);
 #endif
