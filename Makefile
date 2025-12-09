@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Wextra
 MLX_FLAGS = -Lminilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz
 
 # Source files
-PARSING_SRCS = parsing.c utils.c textures.c
+PARSING_SRCS = textures.c parsing/*.c
 RAYCASTING_SRCS = raycasting/player_rotation.c raycasting/intersections.c raycasting/raycasting.c \
                   raycasting/init_environment.c raycasting/mlx_init.c raycasting/player.c \
                   raycasting/player_movement.c

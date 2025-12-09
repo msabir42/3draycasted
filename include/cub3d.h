@@ -13,8 +13,8 @@
 # include <stdbool.h>
 
 #define TILE_SIZE 30
-#define MAP_WIDTH 25
-#define MAP_HEIGHT 20
+#define MAP_WIDTH 30
+#define MAP_HEIGHT 30
 #define TEX_WIDTH  64
 #define TEX_HEIGHT 64
 #define SCREEN_W  (MAP_WIDTH * TILE_SIZE)
