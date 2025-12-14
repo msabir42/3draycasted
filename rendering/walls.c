@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+/* #include "../cub3d.h"
 #include <math.h>
 
 double	wall_projection_height(t_ray *ray)
@@ -187,3 +187,5 @@ void	draw_walls(t_game *game)
 		i++;
 	}
 }
+
+*/

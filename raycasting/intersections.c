@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "../include/cub3d.h"
 
 void	ray_direction(t_ray *ray)
 {

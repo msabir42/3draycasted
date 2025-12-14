@@ -3,14 +3,40 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 MLX_FLAGS = -Lminilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz
 
-# Source files
-PARSING_SRCS = textures.c parsing/*.c
-RAYCASTING_SRCS = raycasting/player_rotation.c raycasting/intersections.c raycasting/raycasting.c \
-                  raycasting/init_environment.c raycasting/mlx_init.c raycasting/player.c \
-                  raycasting/player_movement.c
-RENDERING_SRCS = rendering/walls.c
+# Source files - Explicitly list all files
+PARSING_SRCS = parsing/check_wall.c \
+               parsing/fetch_lines.c \
+               parsing/init_data.c \
+               parsing/parse_colors.c \
+               parsing/parse_map.c \
+               parsing/parse_map_utils.c \
+               parsing/parse_metadata.c \
+               parsing/parse_metadata_utils.c \
+               parsing/utils_error.c \
+               parsing/utils_sanitize.c \
+               parsing/utils_string.c \
+               parsing/validate_map.c
 
-SRCS = main.c $(PARSING_SRCS) $(RAYCASTING_SRCS) $(RENDERING_SRCS)
+RAYCASTING_SRCS = raycasting/init_environment.c \
+                  raycasting/intersections.c \
+                  raycasting/mlx_init.c \
+                  raycasting/player.c \
+                  raycasting/player_movement.c \
+                  raycasting/player_rotation.c \
+                  raycasting/raycasting.c
+
+RENDERING_SRCS = rendering/draw_slice.c \
+                 rendering/draw_texture_slice.c \
+                 rendering/draw_walls.c \
+                 rendering/texture_sampling.c \
+                 rendering/wall_projection.c \
+                 rendering/textures.c  # Moved from root
+
+
+MAIN_SRC = main.c
+
+# Combine all sources
+SRCS = $(MAIN_SRC) $(PARSING_SRCS) $(RAYCASTING_SRCS) $(RENDERING_SRCS) 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -19,7 +45,7 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -Iinclude -Iminilibx-linux -c $< -o $@
 
 clean:
 	rm -f $(OBJS)

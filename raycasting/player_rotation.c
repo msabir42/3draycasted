@@ -1,4 +1,5 @@
-#include "../cub3d.h"
+#include "../include/cub3d.h"
+
 
 void	rotate_right(t_player *p)
 {

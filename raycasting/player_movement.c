@@ -1,4 +1,5 @@
-#include "../cub3d.h"
+#include "../include/cub3d.h"
+
 
 void	move_forward(t_game *game)
 {

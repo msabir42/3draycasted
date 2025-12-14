@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "../include/cub3d.h"
 
 void	init_game(t_game *game, t_data data, t_player p)
 {

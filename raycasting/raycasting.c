@@ -1,4 +1,5 @@
-#include "../cub3d.h"
+#include "../include/cub3d.h"
+
 
 double	distance(double x1, double x2, double y1, double y2)
 {

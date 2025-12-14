@@ -1,4 +1,5 @@
-#include "../cub3d.h"
+#include "../include/cub3d.h"
+
 
 void	init_player(t_player *p, t_data *data)
 {
