@@ -1,7 +1,7 @@
-NO ./textures/nazi.xpm
-SO ./textures/nazi.xpm
-WE ./textures/nazi.xpm
-EA ./textures/nazi.xpm
+NO ./include/textures/nazi.xpm
+SO ./include/textures/nazi.xpm
+WE ./include/textures/nazi.xpm
+EA ./include/textures/nazi.xpm
 F 255,0,0`         
 C 64,64,64  
 

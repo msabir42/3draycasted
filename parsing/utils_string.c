@@ -1,7 +1,6 @@
 #include "../include/cub3d.h"
 
 /* ========== FUNCTION PROTOTYPES FOR STATIC FUNCTIONS ========== */
-static int	has_space(char *s);
 static int	word_count(const char *str, char c);
 static char	*fill_word(const char *str, int start, int end);
 static void	ft_initiate_vars(size_t *i, int *j, int *s_word);
@@ -145,10 +144,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (i);
 }
 
-int	rgb_to_int(int r, int g, int b)
-{
-	return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
-}
+
 
 int	check_newline(char *s)
 {
@@ -285,53 +281,8 @@ char	**ft_split(const char *s, char c)
 
 /* ========== SANITIZE HELPERS ========== */
 
-static int	has_space(char *s)
-{
-	int	i;
 
-	i = 0;
-	while (s && s[i])
-	{
-		if (s[i] == ' ')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
-char	**sanitize(char **string)
-{
-	int		i;
-	int		count;
-	char	**tmp;
-
-	if (!string)
-		return (NULL);
-	i = 0;
-	count = 0;
-	while (string[i])
-	{
-		if (!has_space(string[i]))
-			count++;
-		i++;
-	}
-	tmp = malloc(sizeof(char *) * (count + 1));
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	count = 0;
-	while (string[i])
-	{
-		if (!has_space(string[i]))
-		{
-			tmp[count] = ft_strdup(string[i]);
-			count++;
-		}
-		i++;
-	}
-	tmp[count] = NULL;
-	return (tmp);
-}
 
 /* ========== PARSING SPECIFIC ========== */
 
