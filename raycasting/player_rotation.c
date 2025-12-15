@@ -1,6 +1,5 @@
 #include "../include/cub3d.h"
 
-
 void	rotate_right(t_player *p)
 {
 	double	new_dirx;
@@ -37,4 +36,21 @@ void	rotate_left(t_player *p)
 	p->dir_y = new_diry;
 	p->plane_x = new_planex;
 	p->plane_y = new_planey;
+}
+
+int is_movement_valid(t_game *game, double new_x, double new_y)
+{
+	double offset;
+
+	offset = 0.2;
+	if(game->data.map[(int)(new_y + offset)][(int)(new_x + offset)] == 1)
+		return(0);
+	if(game->data.map[(int)(new_y + offset)][(int)(new_x - offset)] == 1)
+		return(0);
+	if(game->data.map[(int)(new_y - offset)][(int)(new_x - offset)] == 1)
+		return(0);
+	if(game->data.map[(int)(new_y - offset)][(int)(new_x + offset)] == 1)
+		return(0);
+
+	return (1);
 }

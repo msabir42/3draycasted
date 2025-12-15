@@ -43,6 +43,7 @@ int	main(int argc, char **argv)
 	mlx_hook(game->mlx.win, 17, 0, (int (*)())exit, 0);
 	draw_background(game, game->data.ceiling_color, game->data.floor_color);
 	draw_walls(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
 	mlx_loop(game->mlx.mlx);
 	free_textures(game);

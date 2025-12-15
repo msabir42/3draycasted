@@ -45,15 +45,15 @@ void	draw_player(t_player *p, t_game *game)
 	int pos_x;
 	int pos_y;
 
-	i = -3;
-	pos_x = p->pos_x * TILE_SIZE;
-	pos_y = p->pos_y * TILE_SIZE;
-	while (i <= 3)
+	i = -2;
+	pos_x = p->pos_x * MINI_TILE + OFFSET;
+	pos_y = p->pos_y * MINI_TILE + OFFSET;
+	while (i <= 2)
 	{
-		j = -3;
-		while (j <= 3)
+		j = -2;
+		while (j <= 2)
 		{
-			if (i * i + j * j <= 9)
+			if (i * i + j * j <= 4)
 				my_mlx_pixel_put(game, pos_x + i, pos_y + j, 0xFFFF00);
 			j++;
 		}

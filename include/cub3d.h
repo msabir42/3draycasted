@@ -13,6 +13,8 @@
 # include <stdbool.h>
 
 # define TILE_SIZE 30
+# define MINI_TILE 20
+# define OFFSET 20
 # define MAP_WIDTH 30
 # define MAP_HEIGHT 30
 # define TEX_WIDTH 64
@@ -156,6 +158,7 @@ void	ray_horizontal_intersection(t_player *p, t_ray *ray, t_intersect *inter);
 t_intersect	calculate_distance(t_game *game, t_player *p, t_ray *ray);
 void	draw_line(t_game *game, double x0, double y0, double x1, double y1, int color);
 void	cast_single_ray(t_game *game, double ray_angle);
+void	minimap(t_game *game);
 
 /* ========== PLAYER FUNCTIONS ========== */
 void	rotate_left(t_player *p);
@@ -165,6 +168,7 @@ void	move_forward(t_game *game);
 void	move_right(t_game *game);
 void	move_left(t_game *game);
 void	move_down(t_game *game);
+int		is_movement_valid(t_game *game, double new_x, double new_y);
 
 /* ========== RENDERING FUNCTIONS ========== */
 void	draw_background(t_game *game, int ceiling, int floor);

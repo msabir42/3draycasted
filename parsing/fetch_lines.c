@@ -100,6 +100,7 @@ int	fetch_lines(char *file, t_data *data)
 		free(line);
 	}
 	close(fd);
+	data->map_height = map_row;
 	if (!validate_metadata(data))
 		return (0);
 	if (!validate_map(data))

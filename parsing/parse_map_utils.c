@@ -36,6 +36,8 @@ int	parse_map_line(char *line, t_data *data, int row)
 			col++;
 		i++;
 	}
+	if(col > data->map_width)
+		data->map_width = col;
 	while (col < MAP_WIDTH)
 	{
 		data->map[row][col] = 1;
