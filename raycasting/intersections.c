@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   intersections.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/16 15:32:26 by oukadir           #+#    #+#             */
+/*   Updated: 2025/12/16 15:54:02 by oukadir          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3d.h"
 
 void	ray_direction(t_ray *ray)
@@ -63,16 +75,10 @@ void	find_hit_point(t_ray *ray, t_game *game, t_intersect *intersect)
 			break ;
 		if (game->data.map[map_y][map_x] == 1)
 		{
-			intersect->hit_point_x = x_next;
-			intersect->hit_point_y = y_next;
-			intersect->found = true;
-			ray->found_wall = true;
+			set_values(intersect, x_next, y_next, ray);
 			break ;
 		}
 		else
-		{
-			x_next += intersect->x_step;
-			y_next += intersect->y_step;
-		}
+			increment_values(&x_next, &y_next, intersect);
 	}
 }

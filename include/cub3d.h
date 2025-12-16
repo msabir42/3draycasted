@@ -76,6 +76,17 @@ typedef struct s_player
 	double	angle;
 }	t_player;
 
+typedef struct s_keys
+{
+	int w;
+	int a;
+	int s;
+	int d;
+	int left;
+	int right;
+	int esc;
+}	t_keys;
+
 typedef struct s_game
 {
 	t_mlx		mlx;
@@ -85,6 +96,7 @@ typedef struct s_game
 	t_texture	south_tex;
 	t_texture	west_tex;
 	t_texture	east_tex;
+	t_keys		keys;
 }	t_game;
 
 typedef struct s_intersect
@@ -97,6 +109,7 @@ typedef struct s_intersect
 	double	hit_point_y;
 	double	dist;
 	bool	found;
+	int		tile_size;
 }	t_intersect;
 
 typedef struct s_ray
@@ -112,6 +125,19 @@ typedef struct s_ray
 	double		dist;
 	int			side;
 }	t_ray;
+
+typedef struct  s_coordintates
+{
+	double	dx;
+	double	dy;
+	int		steps;
+	double	x_inc;
+	double	y_inc;
+	double	x;
+	double	y;
+	double	px;
+	double	py;
+}	t_coordinates;
 
 /* ========== ERROR HANDLING ========== */
 void	print_error(char *message);
@@ -156,9 +182,14 @@ void	find_hit_point(t_ray *ray, t_game *game, t_intersect *intersect);
 void	ray_vertical_intersection(t_player *p, t_ray *ray, t_intersect *inter);
 void	ray_horizontal_intersection(t_player *p, t_ray *ray, t_intersect *inter);
 t_intersect	calculate_distance(t_game *game, t_player *p, t_ray *ray);
-void	draw_line(t_game *game, double x0, double y0, double x1, double y1, int color);
+void	draw_line(t_game *game, t_player *p, t_intersect Hit, int color);
 void	cast_single_ray(t_game *game, double ray_angle);
 void	minimap(t_game *game);
+void	set_values(t_intersect *intersect, double x_next, double y_next, t_ray *ray);
+void	increment_values(double *x_next, double *y_next, t_intersect *intersect);
+void	check_horiz_vertic(t_intersect *horiz, t_intersect *vertic, t_player *p, t_ray *ray);
+double	distance(double x1, double x2, double y1, double y2);
+void	draw_line_map(t_game *game, t_player *p, t_intersect Hit, int color);
 
 /* ========== PLAYER FUNCTIONS ========== */
 void	rotate_left(t_player *p);
@@ -169,6 +200,9 @@ void	move_right(t_game *game);
 void	move_left(t_game *game);
 void	move_down(t_game *game);
 int		is_movement_valid(t_game *game, double new_x, double new_y);
+int		game_loop(t_game *game);
+int		key_release(int keycode, t_game *game);
+
 
 /* ========== RENDERING FUNCTIONS ========== */
 void	draw_background(t_game *game, int ceiling, int floor);
