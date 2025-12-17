@@ -6,7 +6,7 @@
 /*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:32:32 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/16 15:34:22 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/12/17 19:06:38 by oukadir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,42 @@ void	clear_screen(t_game *game)
 		}
 		y++;
 	}
+}
+
+int	close_game(t_game *game)
+{
+	free_textures(game);
+	if (game->data.east_texture_path)
+		free(game->data.east_texture_path);
+	if (game->data.west_texture_path)
+		free(game->data.west_texture_path);
+	if (game->data.north_texture_path)
+		free(game->data.north_texture_path);
+	if (game->data.south_texture_path)
+		free(game->data.south_texture_path);
+	if (game->mlx.img)
+		mlx_destroy_image(game->mlx.mlx, game->mlx.img);
+	if (game->mlx.win)
+		mlx_destroy_window(game->mlx.mlx, game->mlx.win);
+	if (game->mlx.mlx)
+	{
+		mlx_destroy_display(game->mlx.mlx);
+		free(game->mlx.mlx);
+	}
+	free(game);
+	exit(0);
+	return (0);
+}
+
+void	mlx_calls(t_game *game)
+{
+	mlx_hook(game->mlx.win, 2, 1L << 0, key_press, game);
+	mlx_hook(game->mlx.win, 3, 1L << 1, key_release, game);
+	mlx_hook(game->mlx.win, 17, 0, close_game, game);
+	mlx_loop_hook(game->mlx.mlx, game_loop, game);
+	draw_background(game, game->data.ceiling_color, game->data.floor_color);
+	draw_walls(game);
+	minimap(game);
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
+	mlx_loop(game->mlx.mlx);
 }

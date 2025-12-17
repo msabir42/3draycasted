@@ -6,7 +6,7 @@
 /*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:32:49 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/16 15:36:16 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/12/17 18:53:04 by oukadir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ int	game_loop(t_game *game)
 {
 	if (game->keys.esc)
 	{
-		mlx_destroy_window(game->mlx.mlx, game->mlx.win);
-		exit(0);
+		close_game(game);
 	}
 	if (game->keys.w)
 		move_forward(game);

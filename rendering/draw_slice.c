@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_slice.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/17 19:07:12 by oukadir           #+#    #+#             */
+/*   Updated: 2025/12/17 19:09:30 by oukadir          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3d.h"
 #include <math.h>
 #include <stdio.h>
 
 void	draw_slice_to_screen(t_game *game, double ray_angle, int x)
 {
-	t_ray ray;
-	t_intersect final_hit;
-	double wall_height;
-	double player_angle;
-	double angle_diff;
+	t_ray		ray;
+	t_intersect	final_hit;
+	double		wall_height;
+	double		player_angle;
+	double		angle_diff;
 
 	while (ray_angle < 0)
 		ray_angle += 2 * M_PI;

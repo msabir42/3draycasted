@@ -6,7 +6,7 @@
 /*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:32:26 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/16 15:54:02 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/12/17 18:38:49 by oukadir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ray_direction(t_ray *ray)
 void	ray_horizontal_intersection(t_player *p, t_ray *ray, t_intersect *inter)
 {
 	inter->found = false;
+	inter->y_intersect = -1.0;
+	inter->x_intersect = -1.0;
 	if (ray->angle == 0 || ray->angle == M_PI)
 		return ;
 	inter->y_intersect = floor(p->pos_y);
@@ -40,6 +42,8 @@ void	ray_horizontal_intersection(t_player *p, t_ray *ray, t_intersect *inter)
 void	ray_vertical_intersection(t_player *p, t_ray *ray, t_intersect *inter)
 {
 	inter->found = false;
+	inter->y_intersect = -1.0;
+	inter->x_intersect = -1.0;
 	if (ray->angle == 0.5 * M_PI || ray->angle == 1.5 * M_PI)
 		return ;
 	inter->x_intersect = floor(p->pos_x);

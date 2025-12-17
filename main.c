@@ -39,16 +39,9 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	printf("Textures loaded successfully!\n");
-	mlx_hook(game->mlx.win, 2, 1L << 0, key_press, game);
-	mlx_hook(game->mlx.win, 3, 1L << 1, key_release, game);
-	mlx_hook(game->mlx.win, 17, 0, (int (*)())exit, 0);
-	mlx_loop_hook(game->mlx.mlx, game_loop, game);
-	draw_background(game, game->data.ceiling_color, game->data.floor_color);
-	draw_walls(game);
-	minimap(game);
-	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
-	mlx_loop(game->mlx.mlx);
-	free_textures(game);
-	free(game);
+	mlx_calls(game);
+	// free_textures(game);
+	// free(game);
 	return (0);
 }
+

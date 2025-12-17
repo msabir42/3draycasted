@@ -190,7 +190,8 @@ void	increment_values(double *x_next, double *y_next, t_intersect *intersect);
 void	check_horiz_vertic(t_intersect *horiz, t_intersect *vertic, t_player *p, t_ray *ray);
 double	distance(double x1, double x2, double y1, double y2);
 void	draw_line_map(t_game *game, t_player *p, t_intersect Hit, int color);
-
+int		close_game(t_game *game);
+void	mlx_calls(t_game *game);
 /* ========== PLAYER FUNCTIONS ========== */
 void	rotate_left(t_player *p);
 void	rotate_right(t_player *p);
