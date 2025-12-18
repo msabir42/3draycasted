@@ -21,19 +21,25 @@ int	parse_map_line(char *line, t_data *data, int row)
 			data->player_start_y = row;
 			data->player_start_direction = line[i];
 			data->player_found = 1;
-			data->map[row][col] = 0;
+			data->map[row][col] = 0;  
 		}
-		else if (line[i] == ' ')
-			data->map[row][col] = 1;
-		else if (line[i] == '0' || line[i] == '1')
-			data->map[row][col] = line[i] - '0';
-		else if (!ft_isspace(line[i]))
+		else if (line[i] == ' ')      
+			data->map[row][col] = 0;
+		else if (line[i] == '0')
+			data->map[row][col] = 0;  
+		else if (line[i] == '1')
+			data->map[row][col] = 1; 
+		else if (line[i] != '\t' && line[i] != '\n' && line[i] != '\r' && 
+				 line[i] != '\v' && line[i] != '\f')  
 		{
 			print_error("Invalid character in map\n");
 			return (0);
 		}
-		if (!ft_isspace(line[i]))
+				if (line[i] == ' ' || line[i] == '0' || line[i] == '1' || 
+			line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+		{
 			col++;
+		}
 		i++;
 	}
 	if(col > data->map_width)
