@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_projection.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 19:07:39 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/17 19:07:40 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/12/19 19:12:58 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 double	wall_projection_height(t_ray *ray)
 {
-	double projection_height;
-	double dist_to_projection_plane;
+	double	projection_height;
+	double	dist_to_projection_plane;
 
 	dist_to_projection_plane = (SCREEN_W / 2) / tan(FOV / 2);
 	if (ray->dist < 0.05)

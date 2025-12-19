@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_sampling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 19:07:30 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/17 19:07:31 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/12/19 19:07:06 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	get_texture_color(t_texture *tex, int x, int y)
 {
-	int color;
-	char *pixel;
+	int		color;
+	char	*pixel;
 
 	if (!tex || !tex->addr)
 		return (0x0000FF);

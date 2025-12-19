@@ -97,6 +97,7 @@ typedef struct s_game
 	t_texture	west_tex;
 	t_texture	east_tex;
 	t_keys		keys;
+	double		wall_height;
 }	t_game;
 
 typedef struct s_intersect
@@ -138,6 +139,24 @@ typedef struct  s_coordintates
 	double	px;
 	double	py;
 }	t_coordinates;
+
+typedef struct s_draw_data
+{
+	int		top;
+	int		bottom;
+	double	step;
+	double	pos;
+}	t_draw_data;
+
+typedef struct s_slice_param
+{
+	int			x;
+	t_texture	*tex;
+	int			tex_x;
+	double		wall_h;
+}	t_slice_param;
+
+
 
 /* ========== ERROR HANDLING ========== */
 void	print_error(char *message);
@@ -216,10 +235,13 @@ void	clear_screen(t_game *game);
 void	my_mlx_pixel_put(t_game *game, int x, int y, int color);
 void	draw_slice_to_screen(t_game *game, double ray_angle, int x);
 double	wall_projection_height(t_ray *ray);
-void	draw_textured_slice(t_game *game, int x, double wall_height, t_intersect hit, t_ray *ray);
+void	draw_slice_pixels(t_game *game, t_slice_param param);
+void	draw_textured_slice(t_game *game, int x, double wall_h,
+		t_intersect hit, t_ray *ray);
 int		get_texture_color(t_texture *tex, int x, int y);
 
 /* ========== TEXTURE FUNCTIONS ========== */
+ int	handle_texture_error(t_game *game, t_texture *tex, char *name);
 int		load_single_texture(t_game *game, t_texture *tex, char *path, char *name);
 int		load_all_textures(t_game *game);
 void	free_textures(t_game *game);

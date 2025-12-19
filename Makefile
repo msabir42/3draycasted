@@ -3,7 +3,6 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 MLX_FLAGS = -Lminilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz
 
-# Source files - Explicitly list all files
 PARSING_SRCS = parsing/check_wall.c \
                parsing/fetch_lines.c \
                parsing/init_data.c \
@@ -37,7 +36,9 @@ RENDERING_SRCS = rendering/draw_slice.c \
                  rendering/draw_walls.c \
                  rendering/texture_sampling.c \
                  rendering/wall_projection.c \
-                 rendering/textures.c  # Moved from root
+                 rendering/textures.c \
+                 rendering/draw_slice_pixels.c \
+                 rendering/free_textures.c
 
 
 MAIN_SRC = main.c
