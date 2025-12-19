@@ -1,7 +1,7 @@
 NO ./include/textures/north.xpm
 SO ./include/textures/north.xpm
-WE ./include/textures/north.xpm
-EA ./include/textures/north.xpm
+WE ./include/textures/north.xpm    
+EA ./include/textures/north.xp m
 F 255,0,0`         
 C 64,64,64  
 

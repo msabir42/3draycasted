@@ -15,7 +15,12 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/utils_error.c \
                parsing/utils_sanitize.c \
                parsing/utils_string.c \
-               parsing/validate_map.c
+               parsing/validate_map.c \
+               parsing/utils_split.c \
+               parsing/utils_gnl.c \
+               parsing/utils_memory.c \
+               parsing/utils_more_string.c \
+               
 
 RAYCASTING_SRCS = raycasting/init_environment.c \
                   raycasting/intersections.c \

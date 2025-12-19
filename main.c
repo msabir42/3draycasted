@@ -23,6 +23,7 @@ int	main(int argc, char **argv)
 	if (!fetch_lines(map_file, &game->data))
 	{
 		print_error("Failed to parse map\n");
+		cleanup_data(&game->data);
 		free(game);
 		return (1);
 	}
@@ -34,14 +35,15 @@ int	main(int argc, char **argv)
 	if (!load_all_textures(game))
 	{
 		print_error("Failed to load textures\n");
+		cleanup_data(&game->data);
 		free_textures(game);
 		free(game);
 		return (1);
 	}
 	printf("Textures loaded successfully!\n");
 	mlx_calls(game);
-	// free_textures(game);
-	// free(game);
+	cleanup_data(&game->data);
+	free_textures(game);
+	free(game);
 	return (0);
 }
-

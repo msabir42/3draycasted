@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_metadata_utils.c                             :+:      :+:    :+:   */
+/*   utils_memory.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 03:01:05 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/19 03:31:24 by msabir           ###   ########.fr       */
+/*   Created: 2025/12/19 03:48:16 by msabir            #+#    #+#             */
+/*   Updated: 2025/12/19 03:49:49 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	is_map_line(char *line)
+void	ft_free(char **arr, int n)
 {
 	int	i;
 
+	if (!arr)
+		return ;
 	i = 0;
-	if (!line || is_empty_line(line))
-		return (0);
-	while (line[i])
+	while (i < n)
 	{
-		if (line[i] != ' ' && line[i] != '0' && line[i] != '1' && line[i] != 'N'
-			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W'
-			&& !ft_isspace(line[i]))
-			return (0);
+		if (arr[i])
+			free(arr[i]);
 		i++;
 	}
-	return (1);
+	free(arr);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
+	size_t	total_size;
+
+	total_size = count * size;
+	ptr = malloc(total_size);
+	if (ptr)
+		memset(ptr, 0, total_size);
+	return (ptr);
 }

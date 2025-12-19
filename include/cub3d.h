@@ -157,6 +157,8 @@ int		validate_map(t_data *data);
 int		check_closed_walls(t_data *data);
 int		parse_map_block(char **lines, t_data *data);
 char	**sanitize(char **string);
+void	cleanup_data(t_data *data);
+
 
 /* ========== UTILITY FUNCTIONS ========== */
 char	**ft_split(const char *s, char c);
