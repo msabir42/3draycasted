@@ -1,4 +1,4 @@
-NAME = cube
+NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 MLX_FLAGS = -Lminilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz

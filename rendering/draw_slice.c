@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 19:07:12 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/19 19:14:49 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/19 19:56:26 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	draw_slice_to_screen(t_game *game, double ray_angle, int x)
 {
 	t_ray		ray;
 	t_intersect	hit;
-	double		wall_height;
 
 	ray_angle = normalize_angle(ray_angle);
 	ray.angle = ray_angle;
@@ -62,7 +61,6 @@ void	draw_slice_to_screen(t_game *game, double ray_angle, int x)
 	ray.dist = fix_fisheye(game, ray_angle, ray.dist);
 	if (ray.found_wall)
 	{
-		wall_height = wall_projection_height(&ray);
-		draw_textured_slice(game, x, wall_height, hit, &ray);
+		draw_textured_slice(game, x, hit, &ray);
 	}
 }

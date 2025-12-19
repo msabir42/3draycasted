@@ -236,8 +236,8 @@ void	my_mlx_pixel_put(t_game *game, int x, int y, int color);
 void	draw_slice_to_screen(t_game *game, double ray_angle, int x);
 double	wall_projection_height(t_ray *ray);
 void	draw_slice_pixels(t_game *game, t_slice_param param);
-void	draw_textured_slice(t_game *game, int x, double wall_h,
-		t_intersect hit, t_ray *ray);
+void    draw_textured_slice(t_game *game, int x, t_intersect hit, t_ray *ray);
+
 int		get_texture_color(t_texture *tex, int x, int y);
 
 /* ========== TEXTURE FUNCTIONS ========== */

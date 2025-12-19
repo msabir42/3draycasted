@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 19:07:21 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/19 19:27:38 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/19 19:59:22 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	draw_textured_slice(t_game *game, int x, t_intersect hit, t_ray *ray)
 
 	if (!game || !ray)
 		return ;
-	wall_h = (SCREEN_H / hit.dist);
+	wall_h = (SCREEN_H / ray->dist);
 	param.x = x;
 	param.wall_h = sanitize_wall_height(wall_h);
 	prepare_slice_params(game, &param, hit, ray);
