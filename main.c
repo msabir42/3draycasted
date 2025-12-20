@@ -1,49 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/20 17:36:02 by msabir            #+#    #+#             */
+/*   Updated: 2025/12/20 17:46:33 by msabir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "include/cub3d.h"
-#include <stdio.h>
 #include <stdlib.h>
+
+static void	exit_error(t_game *game, char *msg)
+{
+	if (msg)
+		print_error(msg);
+	if (game)
+	{
+		free_textures(game);
+		cleanup_data(&game->data);
+		free(game);
+	}
+	exit(1);
+}
 
 int	main(int argc, char **argv)
 {
 	t_game	*game;
-	char	*map_file;
 
 	if (argc != 2)
 	{
-		print_error("Usage: ./cube map.cub\n");
+		print_error("Usage: ./cub3D map.cub\n");
 		return (1);
 	}
-	map_file = argv[1];
+
 	game = malloc(sizeof(t_game));
 	if (!game)
 	{
 		print_error("Malloc failed\n");
 		return (1);
 	}
+
+	ft_bzero(game, sizeof(t_game));
+
 	init_data(&game->data);
-	if (!fetch_lines(map_file, &game->data))
-	{
-		print_error("Failed to parse map\n");
-		cleanup_data(&game->data);
-		free(game);
-		return (1);
-	}
+
+	if (!fetch_lines(argv[1], &game->data))
+		exit_error(game, "Failed to parse map\n");
+
 	init_player(&game->player, &game->data);
-	printf("Floor color: 0x%X\n", game->data.floor_color);
-	printf("Ceiling color: 0x%X\n", game->data.ceiling_color);
+
 	init_game(game, game->data, game->player);
-	printf("Loading textures...\n");
+
 	if (!load_all_textures(game))
-	{
-		print_error("Failed to load textures\n");
-		cleanup_data(&game->data);
-		free_textures(game);
-		free(game);
-		return (1);
-	}
-	printf("Textures loaded successfully!\n");
+		exit_error(game, "Failed to load textures\n");
+
 	mlx_calls(game);
-	cleanup_data(&game->data);
+
 	free_textures(game);
+	cleanup_data(&game->data);
 	free(game);
 	return (0);
 }

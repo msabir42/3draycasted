@@ -1,8 +1,8 @@
-NO ./include/textures/north.xpm
+NO ./include/textures/norh.xpm
 SO ./include/textures/south.xpm
 WE ./include/textures/west.xpm    
 EA ./include/textures/east.xpm
-F 255,0,0    
+F 50,100,150    
 C 64,64,64  
 
 1111111111111111

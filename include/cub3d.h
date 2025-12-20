@@ -158,10 +158,8 @@ typedef struct s_slice_param
 
 
 
-/* ========== ERROR HANDLING ========== */
 void	print_error(char *message);
 
-/* ========== PARSING FUNCTIONS ========== */
 void	init_data(t_data *data);
 int		fetch_lines(char *file, t_data *data);
 int		check_file(char *file, char *ext);
@@ -179,11 +177,11 @@ char	**sanitize(char **string);
 void	cleanup_data(t_data *data);
 
 
-/* ========== UTILITY FUNCTIONS ========== */
 char	**ft_split(const char *s, char c);
 void	ft_free(char **strs, int count);
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
+void	ft_bzero(void *s, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
@@ -194,7 +192,6 @@ int		ft_isspace(int c);
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 
-/* ========== RAYCASTING FUNCTIONS ========== */
 void	init_game(t_game *game, t_data data, t_player p);
 void	init_player(t_player *p, t_data *data);
 void	cast_all_rays(t_game *game);
@@ -213,7 +210,7 @@ double	distance(double x1, double x2, double y1, double y2);
 void	draw_line_map(t_game *game, t_player *p, t_intersect Hit, int color);
 int		close_game(t_game *game);
 void	mlx_calls(t_game *game);
-/* ========== PLAYER FUNCTIONS ========== */
+
 void	rotate_left(t_player *p);
 void	rotate_right(t_player *p);
 int		key_press(int keycode, t_game *game);
@@ -226,7 +223,6 @@ int		game_loop(t_game *game);
 int		key_release(int keycode, t_game *game);
 
 
-/* ========== RENDERING FUNCTIONS ========== */
 void	draw_background(t_game *game, int ceiling, int floor);
 void	draw_map(t_game *game);
 void	draw_player(t_player *p, t_game *game);
@@ -240,10 +236,10 @@ void    draw_textured_slice(t_game *game, int x, t_intersect hit, t_ray *ray);
 
 int		get_texture_color(t_texture *tex, int x, int y);
 
-/* ========== TEXTURE FUNCTIONS ========== */
  int	handle_texture_error(t_game *game, t_texture *tex, char *name);
 int		load_single_texture(t_game *game, t_texture *tex, char *path, char *name);
 int		load_all_textures(t_game *game);
 void	free_textures(t_game *game);
+int		handle_texture(t_data *data, char **tokens);
 
 #endif
