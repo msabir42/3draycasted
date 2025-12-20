@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:53 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:33 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:28:38 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,36 +46,21 @@ void	init_data(t_data *data)
 	data->player_found = 0;
 	init_map(data);
 }
-static void    free_str_array(char **arr)
+
+void	cleanup_data(t_data *data)
 {
-    int i;
-
-    if (!arr)
-        return;
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
-}
-
-
-void    cleanup_data(t_data *data)
-{
-    if (!data)
-        return;
-    free(data->north_texture_path);
-    free(data->south_texture_path);
-    free(data->west_texture_path);
-    free(data->east_texture_path);
-    data->north_texture_path = NULL;
-    data->south_texture_path = NULL;
-    data->west_texture_path = NULL;
-    data->east_texture_path = NULL;
-    free_str_array(data->map);
-    free_str_array(data->file_lines);
-    data->map = NULL;
-    data->file_lines = NULL;
+	if (!data)
+		return ;
+	if (data->north_texture_path)
+		free(data->north_texture_path);
+	if (data->south_texture_path)
+		free(data->south_texture_path);
+	if (data->west_texture_path)
+		free(data->west_texture_path);
+	if (data->east_texture_path)
+		free(data->east_texture_path);
+	data->north_texture_path = NULL;
+	data->south_texture_path = NULL;
+	data->west_texture_path = NULL;
+	data->east_texture_path = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:47:08 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/19 03:49:10 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:29:13 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ char	*ft_strdup(const char *s)
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (i <= len)
+	while (i < len)
 	{
 		res[i] = s[i];
 		i++;
 	}
+	res[i] = '\0';
 	return (res);
 }
 

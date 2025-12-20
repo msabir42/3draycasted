@@ -6,13 +6,11 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:31:35 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/19 20:04:58 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:28:49 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-
 
 static int	set_color(t_data *data, char *id, char *value)
 {
@@ -53,7 +51,7 @@ static int	process_tokens(t_data *data, char **tokens, char *line)
 			return (0);
 	}
 	if (res == -1 && is_map_line(line))
-		return (print_error("Map started before metadata was complete\n"), 0);
+		return (print_error("Map started before metadata was complete"), 0);
 	return (1);
 }
 

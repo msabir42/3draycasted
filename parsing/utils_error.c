@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:01:11 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/20 17:45:27 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:30:06 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ void	print_error(char *message)
 {
 	write(2, "Error\n", 6);
 	if (message)
+	{
 		write(2, message, ft_strlen(message));
+		if (message[ft_strlen(message) - 1] != '\n')
+			write(2, "\n", 1);
+	}
 }
 
 void	ft_bzero(void *s, size_t n)

@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:01:20 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/19 03:51:12 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:29:22 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	validate_metadata(t_data *data)
 		|| !data->west_texture_path || !data->east_texture_path
 		|| data->floor_color == -1 || data->ceiling_color == -1)
 	{
-		print_error("Missing required metadata\n");
+		print_error("Missing required metadata");
 		return (0);
 	}
 	return (1);
@@ -28,13 +28,13 @@ int	validate_map(t_data *data)
 {
 	if (!data->player_found)
 	{
-		print_error("No player starting position found\n");
+		print_error("No player starting position found");
 		return (0);
 	}
 	if (data->player_start_x == 0 || data->player_start_x == MAP_WIDTH - 1
 		|| data->player_start_y == 0 || data->player_start_y == MAP_HEIGHT - 1)
 	{
-		print_error("Player cannot be on map border\n");
+		print_error("Player cannot be on map border");
 		return (0);
 	}
 	if (!check_closed_walls(data))

@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:50 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/19 03:25:18 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:28:36 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	check_file(char *file, char *ext)
 		return (0);
 	len = ft_strlen(file);
 	if (len < 4 || ft_strncmp(file + len - 4, ext, 4) != 0)
-		return (print_error("Invalid extension\n"), 0);
+		return (print_error("Invalid extension"), 0);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (print_error("File cant be open\n"), 0);
+		return (print_error("File can't be opened"), 0);
 	close(fd);
 	return (1);
 }
@@ -36,7 +36,7 @@ int	check_file(char *file, char *ext)
 static int	handle_map(char *line, t_data *data)
 {
 	if (g_row >= MAP_HEIGHT)
-		return (print_error("Map is too tall\n"), 0);
+		return (print_error("Map is too tall"), 0);
 	if (!parse_map_line(line, data, g_row))
 		return (0);
 	g_row++;
@@ -82,7 +82,7 @@ int	fetch_lines(char *file, t_data *data)
 		return (0);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (print_error("Failed to open file\n"), 0);
+		return (print_error("Failed to open file"), 0);
 	g_meta_done = 0;
 	g_map_started = 0;
 	g_row = 0;

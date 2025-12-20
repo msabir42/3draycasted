@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:01:02 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/19 03:29:51 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:28:45 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	parse_map_block(char **lines, t_data *data)
 	{
 		if (i >= MAP_HEIGHT)
 		{
-			print_error("Map is too tall\n");
+			print_error("Map is too tall");
 			return (0);
 		}
 		if (!parse_map_line(lines[i], data, i))

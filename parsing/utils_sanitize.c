@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:01:15 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/19 03:36:44 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/20 21:29:15 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	**copy_no_space(char **string, int count)
 
 char	**sanitize(char **string)
 {
-	int		count;
+	int	count;
 
 	if (!string)
 		return (NULL);
