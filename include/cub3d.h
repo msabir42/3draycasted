@@ -86,6 +86,13 @@ typedef struct s_keys
 	int right;
 	int esc;
 }	t_keys;
+typedef struct s_mouse
+{
+	int		x;
+	int		y;
+	int		last_x;
+	int		enabled;
+}	t_mouse;
 
 typedef struct s_game
 {
@@ -97,6 +104,7 @@ typedef struct s_game
 	t_texture	west_tex;
 	t_texture	east_tex;
 	t_keys		keys;
+	t_mouse		mouse;
 	double		wall_height;
 }	t_game;
 
@@ -210,6 +218,9 @@ void	check_horiz_vertic(t_intersect *horiz, t_intersect *vertic, t_player *p, t_
 double	distance(double x1, double x2, double y1, double y2);
 void	draw_line_map(t_game *game, t_player *p, t_intersect Hit, int color);
 int		close_game(t_game *game);
+int		mouse_move(int x, int y, t_game *game);
+void	handle_mouse_rotation(t_game *game);
+int		mouse_press(int button, int x, int y, t_game *game);
 void	mlx_calls(t_game *game);
 
 void	rotate_left(t_player *p);

@@ -29,7 +29,8 @@ RAYCASTING_SRCS = raycasting/init_environment.c \
                   raycasting/player_rotation.c \
                   raycasting/raycasting.c\
                   raycasting/helpers.c\
-                  minimap/map.c
+                  minimap/map.c \
+                  raycasting/mouse.c
 
 RENDERING_SRCS = rendering/draw_slice.c \
                  rendering/draw_texture_slice.c \
