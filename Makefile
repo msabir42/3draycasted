@@ -19,6 +19,8 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/utils_gnl.c \
                parsing/utils_memory.c \
                parsing/utils_more_string.c \
+               parsing/helpers.c \
+               parsing/check_connectivity.c
                
 
 RAYCASTING_SRCS = raycasting/init_environment.c \

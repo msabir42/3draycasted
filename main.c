@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:36:02 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/22 11:48:00 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/12/25 17:26:11 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	run_game(char *map_path)
 	init_game(game, game->data, game->player);
 	if (!load_all_textures(game))
 	{
-		print_error("Failed to load textures\n");	
+		print_error("Failed to load textures\n");
 		close_game(game);
 	}
 	mlx_calls(game);

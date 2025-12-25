@@ -164,6 +164,13 @@ typedef struct s_slice_param
 	double		wall_h;
 }	t_slice_param;
 
+typedef struct s_parse_state
+{
+	int	meta_done;
+	int	map_started;
+	int	row;
+}	t_parse_state;
+
 
 
 void	print_error(char *message);
@@ -182,6 +189,8 @@ int		validate_map(t_data *data);
 int		check_closed_walls(t_data *data);
 int		parse_map_block(char **lines, t_data *data);
 char	**sanitize(char **string);
+int		check_map_connectivity(t_data *data);
+
 void	cleanup_data(t_data *data);
 
 
@@ -200,6 +209,7 @@ int		check_newline(char *s);
 int		ft_isspace(int c);
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
+int		ft_isdigit(int c);
 
 void	init_game(t_game *game, t_data data, t_player p);
 void	init_player(t_player *p, t_data *data);
