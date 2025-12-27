@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:50 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/24 20:17:14 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/27 17:59:31 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,6 @@ static int	handle_map(char *line, t_data *data, t_parse_state *state)
 	return (1);
 }
 
-static int	handle_metadata(char *line, t_data *data, t_parse_state *state)
-{
-	if (!get_metadata(line, data))
-		return (0);
-	if (data->north_texture_path && data->south_texture_path
-		&& data->west_texture_path && data->east_texture_path
-		&& data->ceiling_color != -1 && data->floor_color != -1)
-		state->meta_done = 1;
-	return (1);
-}
-
 static int	process_line(char *line, t_data *data, t_parse_state *state)
 {
 	char	*tmp;
@@ -42,14 +31,14 @@ static int	process_line(char *line, t_data *data, t_parse_state *state)
 		*tmp = '\0';
 	if (is_empty_line(line))
 		return (1);
-	if (!state->meta_done && !state->map_started)
-		return (handle_metadata(line, data, state));
 	if (is_map_line(line))
 	{
 		state->map_started = 1;
 		return (handle_map(line, data, state));
 	}
-	return (state->meta_done);
+	if (!state->map_started)
+		return (get_metadata(line, data));
+	return (print_error("Invalid content after map started"), 0);
 }
 
 static int	read_file_lines(int fd, t_data *data, t_parse_state *state)
@@ -80,7 +69,6 @@ int	fetch_lines(char *file, t_data *data)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (print_error("Failed to open file"), 0);
-	state.meta_done = 0;
 	state.map_started = 0;
 	state.row = 0;
 	if (!read_file_lines(fd, data, &state))

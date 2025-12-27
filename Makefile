@@ -20,7 +20,8 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/utils_memory.c \
                parsing/utils_more_string.c \
                parsing/helpers.c \
-               parsing/check_connectivity.c
+               parsing/check_connectivity.c \
+               parsing/check_duplicate.c
                
 
 RAYCASTING_SRCS = raycasting/init_environment.c \
@@ -46,7 +47,6 @@ RENDERING_SRCS = rendering/draw_slice.c \
 
 MAIN_SRC = main.c
 
-# Combine all sources
 SRCS = $(MAIN_SRC) $(PARSING_SRCS) $(RAYCASTING_SRCS) $(RENDERING_SRCS) 
 OBJS = $(SRCS:.c=.o)
 

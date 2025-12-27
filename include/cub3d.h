@@ -166,12 +166,9 @@ typedef struct s_slice_param
 
 typedef struct s_parse_state
 {
-	int	meta_done;
 	int	map_started;
 	int	row;
 }	t_parse_state;
-
-
 
 void	print_error(char *message);
 
@@ -210,6 +207,9 @@ int		ft_isspace(int c);
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 int		ft_isdigit(int c);
+int		extra_content(char *value_start);
+int		validate_metadata_format(char **tokens, char *line);
+
 
 void	init_game(t_game *game, t_data data, t_player p);
 void	init_player(t_player *p, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:31:35 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/20 21:28:49 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/27 18:00:15 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,20 @@ static int	set_color(t_data *data, char *id, char *value)
 	color = get_color(value);
 	if (color == -1)
 		return (0);
-	if (ft_strncmp(id, "F", 2) == 0 && data->floor_color == -1)
+	if (ft_strncmp(id, "F", 2) == 0)
+	{
+		if (data->floor_color != -1)
+			return (print_error("Duplicate floor color"), 0);
 		data->floor_color = color;
-	else if (ft_strncmp(id, "C", 2) == 0 && data->ceiling_color == -1)
+	}
+	else if (ft_strncmp(id, "C", 2) == 0)
+	{
+		if (data->ceiling_color != -1)
+			return (print_error("Duplicate ceiling color"), 0);
 		data->ceiling_color = color;
+	}
 	else
-		return (print_error("Duplicate or invalid color"), 0);
+		return (print_error("Invalid color identifier"), 0);
 	return (1);
 }
 
@@ -37,7 +45,7 @@ static int	handle_color(t_data *data, char **tokens)
 	return (-1);
 }
 
-static int	process_tokens(t_data *data, char **tokens, char *line)
+static int	process_metadata_type(t_data *data, char **tokens, char *line)
 {
 	int	res;
 
@@ -63,13 +71,18 @@ int	get_metadata(char *line, t_data *data)
 	if (!line || is_empty_line(line))
 		return (1);
 	tokens = ft_split(line, ' ');
-	if (!tokens || !tokens[0] || !tokens[1])
+	if (!tokens || !tokens[0])
 	{
 		if (tokens)
 			ft_free(tokens, 2);
 		return (1);
 	}
-	res = process_tokens(data, tokens, line);
+	if (!validate_metadata_format(tokens, line))
+	{
+		ft_free(tokens, 2);
+		return (0);
+	}
+	res = process_metadata_type(data, tokens, line);
 	ft_free(tokens, 2);
 	return (res);
 }

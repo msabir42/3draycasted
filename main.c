@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 17:36:02 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/25 17:26:11 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/26 16:01:26 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	cleanup_mlx(t_game *game)
 		mlx_destroy_window(game->mlx.mlx, game->mlx.win);
 		game->mlx.win = NULL;
 	}
+	mlx_destroy_display(game->mlx.mlx);
 	free(game->mlx.mlx);
 	game->mlx.mlx = NULL;
 }

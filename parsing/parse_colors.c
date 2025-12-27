@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:56 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/24 19:24:56 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/26 18:35:13 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	get_color(char *s)
 
 	if (!s)
 		return (-1);
+	while (ft_strlen(s) > 0 && ft_isspace(s[ft_strlen(s) - 1]))
+		s[ft_strlen(s) - 1] = '\0';
 	rgb = ft_split(s, ',');
 	if (!rgb)
 		return (-1);
