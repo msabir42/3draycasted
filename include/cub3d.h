@@ -15,7 +15,7 @@
 # define TILE_SIZE 30
 # define MINI_TILE 20
 # define OFFSET 20
-# define MAP_WIDTH 30
+# define MAP_WIDTH 50
 # define MAP_HEIGHT 30
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
@@ -209,6 +209,7 @@ char	*ft_strchr(const char *s, int c);
 int		ft_isdigit(int c);
 int		extra_content(char *value_start);
 int		validate_metadata_format(char **tokens, char *line);
+void	debug_print_map(t_data *data);
 
 
 void	init_game(t_game *game, t_data data, t_player p);

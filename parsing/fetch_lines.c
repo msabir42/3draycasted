@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:50 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/29 17:46:58 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/30 01:06:06 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	handle_map(char *line, t_data *data, t_parse_state *state)
 {
 	if (state->row >= MAP_HEIGHT)
 		return (print_error("Map is too tall"), 0);
+	if (is_empty_line(line))
+		return (1);
 	if (!parse_map_line(line, data, state->row))
 		return (0);
 	state->row++;

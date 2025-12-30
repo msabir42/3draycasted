@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:29:47 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/24 19:59:31 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/30 01:05:53 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int	check_closed_walls(t_data *data)
 	if (!check_horizontal_walls(data))
 		return (0);
 	if (!check_vertical_walls(data))
-		return (0);
-	if (!check_map_connectivity(data))
 		return (0);
 	return (1);
 }

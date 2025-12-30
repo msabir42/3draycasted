@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:58 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/20 21:28:43 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/30 00:24:14 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,50 @@ static int	set_player(t_data *data, int row, int col, char c)
 
 static int	set_cell(t_data *data, int row, int col, char c)
 {
-	if (c == ' ')
-		data->map[row][col] = 0;
-	else if (c == '0')
+	if (c == '0')
 		data->map[row][col] = 0;
 	else if (c == '1')
+		data->map[row][col] = 1;
+	else if (c == ' ')
 		data->map[row][col] = 1;
 	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		if (!set_player(data, row, col, c))
 			return (0);
 	}
-	else if (c != '\t' && c != '\n' && c != '\r' && c != '\v' && c != '\f')
+	else
 		return (print_error("Invalid character in map"), 0);
 	return (1);
 }
 
-int	parse_map_line(char *line, t_data *data, int row)
+static int	find_line_end(char *line, int start)
 {
+	int	end;
+
+	end = start;
+	while (line[end] && line[end] != '\n' && line[end] != '\r')
+		end++;
+	return (end);
+}
+
+static int	scan_row_chars(char *line, t_data *data, int row,
+			int start)
+{
+	int	end;
 	int	i;
 	int	col;
 
-	i = 0;
+	end = find_line_end(line, start);
+	i = start;
 	col = 0;
-	while (line[i] && col < MAP_WIDTH)
+	while (i < end && col < MAP_WIDTH)
 	{
-		if (!set_cell(data, row, col, line[i]))
-			return (0);
-		if (line[i] == ' ' || line[i] == '0' || line[i] == '1' || line[i] == 'N'
-			|| line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+		if (line[i] != '\t')
+		{
+			if (!set_cell(data, row, col, line[i]))
+				return (0);
 			col++;
+		}
 		i++;
 	}
 	if (col > data->map_width)
@@ -65,5 +79,17 @@ int	parse_map_line(char *line, t_data *data, int row)
 		data->map[row][col] = 1;
 		col++;
 	}
+	return (1);
+}
+
+int	parse_map_line(char *line, t_data *data, int row)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
+		i++;
+	if (!scan_row_chars(line, data, row, i))
+		return (0);
 	return (1);
 }

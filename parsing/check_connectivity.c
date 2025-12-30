@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 19:47:12 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/24 19:58:26 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/30 00:24:14 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,17 @@ static int	check_cells(int **v, t_data *d, int *unreachable)
 		j = 0;
 		while (j < d->map_width)
 		{
-			if (d->map[i][j] == 0 && !v[i][j] && !(*unreachable))
+			if (d->map[i][j] == 0 && !v[i][j])
 			{
 				print_error("Unreachable areas in map");
 				*unreachable = 1;
+				return (0);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (!*unreachable);
+	return (1);
 }
 
 int	check_map_connectivity(t_data *data)

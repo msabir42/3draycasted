@@ -6,28 +6,47 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:01:05 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/20 21:28:48 by msabir           ###   ########.fr       */
+/*   Updated: 2025/12/30 00:24:14 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+static int	is_map_valid_char(char c)
+{
+	if (c == '0' || c == '1' || c == 'N'
+		|| c == 'S' || c == 'E' || c == 'W')
+		return (1);
+	if (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\r' || c == '\v' || c == '\f')
+		return (1);
+	return (0);
+}
+
 int	is_map_line(char *line)
 {
 	int	i;
+	int	has_map_char;
 
-	i = 0;
 	if (!line || is_empty_line(line))
 		return (0);
+	i = 0;
+	has_map_char = 0;
+	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
+		i++;
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '0' && line[i] != '1' && line[i] != 'N'
-			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W'
-			&& !ft_isspace(line[i]))
+		if (is_map_valid_char(line[i]))
+		{
+			if (line[i] == '0' || line[i] == '1' || line[i] == 'N'
+				|| line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+				has_map_char = 1;
+		}
+		else
 			return (0);
 		i++;
 	}
-	return (1);
+	return (has_map_char);
 }
 
 static int	set_texture(t_data *data, char *id, char *path)

@@ -21,7 +21,8 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/utils_more_string.c \
                parsing/helpers.c \
                parsing/check_connectivity.c \
-               parsing/check_duplicate.c
+               parsing/check_duplicate.c \
+               parsing/debug.c
                
 
 RAYCASTING_SRCS = raycasting/init_environment.c \
