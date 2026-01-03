@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:32:49 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/17 18:53:04 by oukadir          ###   ########.fr       */
+/*   Updated: 2026/01/02 23:45:26 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	init_player(t_player *p, t_data *data)
 	p->pos_y = data->player_start_y + 0.5;
 	init_north_south(p, data);
 	init_west_east(p, data);
-	p->move_speed = 0.005;
-	p->rot_speed = 0.003;
+	p->move_speed = MOV_SPEED;
+	p->rot_speed = ROT_SPEED;
 	p->angle = M_PI / 4;
 }
 

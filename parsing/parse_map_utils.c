@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:58 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/30 00:24:14 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/01 17:33:41 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static int	find_line_end(char *line, int start)
 	return (end);
 }
 
+int	pad_row_with_walls(t_data *data, int row, int col);
+
 static int	scan_row_chars(char *line, t_data *data, int row,
 			int start)
 {
@@ -72,14 +74,11 @@ static int	scan_row_chars(char *line, t_data *data, int row,
 		}
 		i++;
 	}
-	if (col > data->map_width)
+	if (row == 0)
 		data->map_width = col;
-	while (col < MAP_WIDTH)
-	{
-		data->map[row][col] = 1;
-		col++;
-	}
-	return (1);
+	else if (col != data->map_width)
+		return (print_error("Map rows must have consistent width"), 0);
+	return (pad_row_with_walls(data, row, col));
 }
 
 int	parse_map_line(char *line, t_data *data, int row)

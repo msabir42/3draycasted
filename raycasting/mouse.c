@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:42:02 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/24 18:28:59 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/02 23:57:05 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	mouse_move(int x, int y, t_game *game)
 	game->mouse.x = x;
 	game->mouse.y = y;
 	delta_x = x - game->mouse.last_x;
-	rotation_speed = 0.002;
+	rotation_speed = 0.0015;
 	if (delta_x > 0)
 		rotate_right(&game->player);
 	else if (delta_x < 0)

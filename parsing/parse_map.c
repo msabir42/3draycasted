@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:01:02 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/20 21:28:45 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/01 17:33:41 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,11 @@ int	parse_map_block(char **lines, t_data *data)
 			return (0);
 		i++;
 	}
+	if (i < 3)
+	{
+		print_error("Map is too small");
+		return (0);
+	}
+	data->map_height = i;
 	return (1);
 }

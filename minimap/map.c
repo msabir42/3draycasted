@@ -3,100 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/16 17:35:26 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/16 17:37:57 by oukadir          ###   ########.fr       */
+/*   Created: 2026/01/02 21:45:07 by msabir            #+#    #+#             */
+/*   Updated: 2026/01/03 02:58:11 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	draw_tile(t_game *game, int x, int y, int color)
+static void	draw_tiles(t_game *game)
 {
-	int	i;
-	int	j;
+	int	row;
+	int	col;
 
-	i = 0;
-	while (i < MINI_TILE)
+	row = -MM_VIEW;
+	while (row <= MM_VIEW)
 	{
-		j = 0;
-		while (j < MINI_TILE)
+		col = -MM_VIEW;
+		while (col <= MM_VIEW)
 		{
-			my_mlx_pixel_put(game, x + j, y + i, color);
-			j++;
+			minimap_draw_single_tile(game, row, col);
+			col++;
 		}
-		i++;
+		row++;
 	}
 }
 
-void	draw_map(t_game *game)
+static void	draw_player_marker(t_game *game)
 {
-	int	i;
-	int	j;
-	int	color;
+	int	marker_radius;
+	int	x;
+	int	y;
 
-	i = 0;
-	while (i < game->data.map_height)
+	marker_radius = MM_TILE / 3;
+	y = -marker_radius;
+	while (y <= marker_radius)
 	{
-		j = 0;
-		while (j < game->data.map_width)
+		x = -marker_radius;
+		while (x <= marker_radius)
 		{
-			if (game->data.map[i][j] == 1)
-				color = 0xFFFFFF;
-			else
-				color = 0x454545;
-			draw_tile(game, j * MINI_TILE + OFFSET,
-				i * MINI_TILE + OFFSET, color);
-			j++;
+			minimap_draw_player_pixel(game, x, y, marker_radius);
+			x++;
 		}
-		i++;
-	}
-}
-
-void	cast_single_ray_minimap(t_game *game, double ray_angle)
-{
-	t_ray		ray;
-	t_intersect	final_hit;
-
-	while (ray_angle < 0)
-		ray_angle += 2 * M_PI;
-	while (ray_angle > 2 * M_PI)
-		ray_angle -= 2 * M_PI;
-	ray.angle = ray_angle;
-	ray.found_wall = false;
-	ray_direction(&ray);
-	final_hit = calculate_distance(game, &game->player, &ray);
-	if (ray.found_wall)
-	{
-		draw_line_map(game, &game->player, final_hit, 0xFF0000);
-	}
-}
-
-void	cast_all_rays_minimap(t_game *game)
-{
-	double	ray_angle;
-	double	angle_step;
-	double	player_angle;
-	double	start_angle;
-	int		i;
-
-	i = 0;
-	player_angle = atan2(game->player.dir_y, game->player.dir_x);
-	ray_angle = 0;
-	start_angle = player_angle - (FOV / 2);
-	angle_step = FOV / NUM_RAYS;
-	while (i < NUM_RAYS)
-	{
-		ray_angle = start_angle + (i * angle_step);
-		cast_single_ray_minimap(game, ray_angle);
-		i++;
+		y++;
 	}
 }
 
 void	minimap(t_game *game)
 {
-	draw_map(game);
-	draw_player(&game->player, game);
-	cast_all_rays_minimap(game);
+	t_minimap_rect	rect;
+	int				grid_size;
+
+	grid_size = (MM_VIEW * 2 + 1) * MM_TILE;
+
+	rect.x = MM_POS_X - 2;
+	rect.y = MM_POS_Y - 2;
+	rect.w = grid_size + 4;
+	rect.h = grid_size + 4;
+	rect.color = 0x111111;
+	minimap_fill_rect(game, rect);
+
+	rect.x = MM_POS_X - 1;
+	rect.y = MM_POS_Y - 1;
+	rect.w = grid_size + 2;
+	rect.h = grid_size + 2;
+	rect.color = 0x202020;
+	minimap_fill_rect(game, rect);
+
+	draw_tiles(game);
+	draw_player_marker(game);
+}
+
+void	draw_map(t_game *game)
+{
+	minimap(game);
 }

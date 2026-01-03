@@ -7,8 +7,10 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/fetch_lines.c \
                parsing/init_data.c \
                parsing/parse_colors.c \
+               parsing/parse_colors_utils.c \
                parsing/parse_map.c \
                parsing/parse_map_utils.c \
+               parsing/parse_map_helpers.c \
                parsing/parse_metadata.c \
                parsing/parse_metadata_utils.c \
                parsing/utils_error.c \
@@ -34,6 +36,7 @@ RAYCASTING_SRCS = raycasting/init_environment.c \
                   raycasting/raycasting.c\
                   raycasting/helpers.c\
                   minimap/map.c \
+                  minimap/map_helpers.c \
                   raycasting/mouse.c
 
 RENDERING_SRCS = rendering/draw_slice.c \
