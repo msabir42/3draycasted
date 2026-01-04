@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/04 06:09:50 by msabir            #+#    #+#             */
-/*   Updated: 2026/01/04 06:09:51 by msabir           ###   ########.fr       */
+/*   Created: 2026/01/04 06:12:55 by msabir            #+#    #+#             */
+/*   Updated: 2026/01/04 08:16:05 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "minilibx-linux/mlx.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
@@ -245,10 +245,17 @@ void			ray_vertical_intersection(t_player *p, t_ray *ray,
 					t_intersect *inter);
 void			ray_horizontal_intersection(t_player *p, t_ray *ray,
 					t_intersect *inter);
-t_intersect		calculate_distance(t_game *game, t_player *p, t_ray *ray);
-void			draw_line(t_game *game, t_player *p, t_intersect hit,
+t_intersect		calculate_distance(t_game *game, t_player *p, t_ray *ray);double			distance(double x1, double x2, double y1, double y2);void			draw_line(t_game *game, t_player *p, t_intersect hit,
 					int color);
 void			cast_single_ray(t_game *game, double ray_angle);
+void			set_values(t_intersect *intersect, double x_next,
+					double y_next, t_ray *ray);
+void			increment_values(double *x_next, double *y_next,
+					t_intersect *intersect);
+void			check_horiz_vertic(t_intersect *horiz, t_intersect *vertic,
+					t_player *p, t_ray *ray);
+void			draw_line_map(t_game *game, t_player *p, t_intersect hit,
+					int color);
 
 void			minimap(t_game *game);
 void			minimap_fill_rect(t_game *game,
@@ -302,6 +309,7 @@ void			draw_textured_slice(t_game *game,
 					int x,
 					t_intersect hit,
 					t_ray *ray);
+void			draw_walls(t_game *game);
 
 int				get_texture_color(t_texture *tex,
 					int x,

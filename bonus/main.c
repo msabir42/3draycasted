@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/cub3d.h"
+#include "./include/cub3d.h"
 
 static void	cleanup_mlx(t_game *game)
 {
