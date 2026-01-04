@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 06:12:55 by msabir            #+#    #+#             */
-/*   Updated: 2026/01/04 08:16:05 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/04 20:07:39 by oukadir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define TILE_SIZE 30
 # define MINI_TILE 20
 # define OFFSET 20
-# define MM_TILE 15
+# define MM_TILE 10
 # define MM_VIEW 8
 # define MM_POS_X 25
 # define MM_POS_Y 25
@@ -39,8 +39,9 @@
 # define SCREEN_H 900
 # define FOV 1.0471975512
 # define NUM_RAYS 1500
-# define ROT_SPEED 0.035
+# define ROT_SPEED 0.025
 # define MOV_SPEED 0.05
+# define MOUSE_SPEED 0.012
 
 typedef struct s_texture
 {

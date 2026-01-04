@@ -56,7 +56,7 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+bonus: $(OBJS)
 	$(CC) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
 %.o: %.c
@@ -68,6 +68,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: fclean bonus
 
 .PHONY: all clean fclean re
