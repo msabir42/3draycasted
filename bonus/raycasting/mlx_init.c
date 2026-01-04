@@ -39,6 +39,12 @@ void	init_game(t_game *game, t_data data, t_player p)
 	game->data = data;
 	game->player = p;
 	init_keys(&game->keys);
+	game->mouse.x = SCREEN_W / 2;
+	game->mouse.y = SCREEN_H / 2;
+	game->mouse.last_x = SCREEN_W / 2;
+	game->mouse.enabled = 1;
+	mlx_mouse_hide(game->mlx.mlx, game->mlx.win);
+	mlx_mouse_move(game->mlx.mlx, game->mlx.win, SCREEN_W / 2, SCREEN_H / 2);
 }
 
 void	clear_screen(t_game *game)
@@ -88,10 +94,13 @@ void	mlx_calls(t_game *game)
 {
 	mlx_hook(game->mlx.win, 2, 1L << 0, key_press, game);
 	mlx_hook(game->mlx.win, 3, 1L << 1, key_release, game);
+	mlx_hook(game->mlx.win, 6, 1L << 6, mouse_move, game);
+	mlx_hook(game->mlx.win, 4, 1L << 2, mouse_press, game);
 	mlx_hook(game->mlx.win, 17, 0, close_game, game);
 	mlx_loop_hook(game->mlx.mlx, game_loop, game);
 	draw_background(game, game->data.ceiling_color, game->data.floor_color);
 	draw_walls(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
 	mlx_loop(game->mlx.mlx);
 }

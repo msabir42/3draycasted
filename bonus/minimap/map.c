@@ -56,21 +56,17 @@ void	minimap(t_game *game)
 	int				grid_size;
 
 	grid_size = (MM_VIEW * 2 + 1) * MM_TILE;
-
 	rect.x = MM_POS_X - 2;
 	rect.y = MM_POS_Y - 2;
 	rect.w = grid_size + 4;
 	rect.h = grid_size + 4;
 	rect.color = 0x111111;
 	minimap_fill_rect(game, rect);
-
-	rect.x = MM_POS_X - 1;
 	rect.y = MM_POS_Y - 1;
 	rect.w = grid_size + 2;
 	rect.h = grid_size + 2;
 	rect.color = 0x202020;
 	minimap_fill_rect(game, rect);
-
 	draw_tiles(game);
 	draw_player_marker(game);
 }

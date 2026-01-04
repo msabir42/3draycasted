@@ -97,6 +97,7 @@ int	game_loop(t_game *game)
 	clear_screen(game);
 	draw_background(game, game->data.ceiling_color, game->data.floor_color);
 	draw_walls(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.win, game->mlx.img, 0, 0);
 	return (0);
 }

@@ -56,10 +56,8 @@ void	minimap_draw_single_tile(t_game *game, int row_off, int col_off)
 	rect.y = MM_POS_Y + (row_off + MM_VIEW) * MM_TILE;
 	rect.w = MM_TILE;
 	rect.h = MM_TILE;
-
 	map_row = (int)game->player.pos_y + row_off;
 	map_col = (int)game->player.pos_x + col_off;
-
 	rect.color = minimap_tile_color(game, map_row, map_col);
 	minimap_fill_rect(game, rect);
 }
@@ -71,10 +69,8 @@ void	minimap_draw_player_pixel(t_game *game, int x, int y, int radius)
 
 	if (x * x + y * y > radius * radius)
 		return ;
-
 	screen_x = MM_POS_X + MM_VIEW * MM_TILE + MM_TILE / 2 + x;
 	screen_y = MM_POS_Y + MM_VIEW * MM_TILE + MM_TILE / 2 + y;
-
 	if (screen_x >= 0 && screen_x < SCREEN_W
 		&& screen_y >= 0 && screen_y < SCREEN_H)
 		my_mlx_pixel_put(game, screen_x, screen_y, 0xFFE26B);

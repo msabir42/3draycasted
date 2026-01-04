@@ -1,4 +1,4 @@
-NAME = cub3D
+NAME = cub3D_bonus
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 MLX_FLAGS = -Lminilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz
@@ -34,7 +34,10 @@ RAYCASTING_SRCS = raycasting/init_environment.c \
                   raycasting/player_movement.c \
                   raycasting/player_rotation.c \
                   raycasting/raycasting.c\
-                  raycasting/helpers.c
+                  raycasting/helpers.c\
+                  minimap/map.c \
+                  minimap/map_helpers.c \
+                  raycasting/mouse.c
 
 RENDERING_SRCS = rendering/draw_slice.c \
                  rendering/draw_texture_slice.c \
