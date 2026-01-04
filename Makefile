@@ -25,7 +25,6 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/check_connectivity.c \
                parsing/check_duplicate.c \
                parsing/debug.c
-               
 
 RAYCASTING_SRCS = raycasting/init_environment.c \
                   raycasting/intersections.c \
@@ -33,7 +32,7 @@ RAYCASTING_SRCS = raycasting/init_environment.c \
                   raycasting/player.c \
                   raycasting/player_movement.c \
                   raycasting/player_rotation.c \
-                  raycasting/raycasting.c\
+                  raycasting/raycasting.c \
                   raycasting/helpers.c
 
 RENDERING_SRCS = rendering/draw_slice.c \
@@ -45,10 +44,9 @@ RENDERING_SRCS = rendering/draw_slice.c \
                  rendering/draw_slice_pixels.c \
                  rendering/free_textures.c
 
-
 MAIN_SRC = main.c
 
-SRCS = $(MAIN_SRC) $(PARSING_SRCS) $(RAYCASTING_SRCS) $(RENDERING_SRCS) 
+SRCS = $(MAIN_SRC) $(PARSING_SRCS) $(RAYCASTING_SRCS) $(RENDERING_SRCS)
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -68,3 +66,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

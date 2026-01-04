@@ -1,10 +1,10 @@
 F 139,99,58
 C 171,154,137
 
-NO ./include/textures/north.xpm
-SO ./include/textures/south.xpm
-WE ./include/textures/west.xpm
-EA ./include/textures/east.xpm
+NO ./include/textures/book.xpm
+SO ./include/textures/book.xpm
+WE ./include/textures/book.xpm
+EA ./include/textures/book.xpm
 
 1111111111111111111
 1001001001001001001
