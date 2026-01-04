@@ -66,7 +66,7 @@ static int	scan_row_chars(char *line, t_data *data, int row,
 	col = 0;
 	while (i < end && col < MAP_WIDTH)
 	{
-		if (line[i] != '\t')
+		if (line[i] != '\t' && line[i] != ' ')
 		{
 			if (!set_cell(data, row, col, line[i]))
 				return (0);
@@ -74,11 +74,14 @@ static int	scan_row_chars(char *line, t_data *data, int row,
 		}
 		i++;
 	}
-	if (row == 0)
+	if (col > data->map_width)
 		data->map_width = col;
-	else if (col != data->map_width)
-		return (print_error("Map rows must have consistent width"), 0);
-	return (pad_row_with_walls(data, row, col));
+	while (col < MAP_WIDTH)
+	{
+		data->map[row][col] = 1;
+		col++;
+	}
+	return (1);
 }
 
 int	parse_map_line(char *line, t_data *data, int row)
