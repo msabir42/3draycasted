@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_slice.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 19:07:12 by oukadir           #+#    #+#             */
-/*   Updated: 2026/01/04 23:21:46 by oukadir          ###   ########.fr       */
+/*   Updated: 2025/12/19 19:56:26 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../include/cub3d_bonus.h"
 #include <math.h>
 
 static double	normalize_angle(double angle)

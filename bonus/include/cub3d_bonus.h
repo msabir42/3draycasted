@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 06:12:55 by msabir            #+#    #+#             */
-/*   Updated: 2026/01/04 23:23:29 by oukadir          ###   ########.fr       */
+/*   Updated: 2026/01/05 18:56:13 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "mlx.h"
 # include <fcntl.h>
@@ -27,7 +27,7 @@
 # define TILE_SIZE 30
 # define MINI_TILE 20
 # define OFFSET 20
-# define MM_TILE 15
+# define MM_TILE 10
 # define MM_VIEW 8
 # define MM_POS_X 25
 # define MM_POS_Y 25
@@ -41,6 +41,7 @@
 # define NUM_RAYS 1500
 # define ROT_SPEED 0.025
 # define MOV_SPEED 0.05
+# define MOUSE_SPEED 0.012
 
 typedef struct s_texture
 {
