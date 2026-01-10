@@ -62,14 +62,7 @@ void	clear_screen(t_game *game)
 int	close_game(t_game *game)
 {
 	free_textures(game);
-	if (game->data.east_texture_path)
-		free(game->data.east_texture_path);
-	if (game->data.west_texture_path)
-		free(game->data.west_texture_path);
-	if (game->data.north_texture_path)
-		free(game->data.north_texture_path);
-	if (game->data.south_texture_path)
-		free(game->data.south_texture_path);
+	cleanup_data(&game->data);
 	if (game->mlx.img)
 		mlx_destroy_image(game->mlx.mlx, game->mlx.img);
 	if (game->mlx.win)
