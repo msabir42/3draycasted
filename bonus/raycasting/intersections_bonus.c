@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersections.c                                    :+:      :+:    :+:   */
+/*   intersections_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:32:26 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/17 18:38:49 by oukadir          ###   ########.fr       */
+/*   Updated: 2026/01/10 22:53:23 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,33 +56,4 @@ void	ray_vertical_intersection(t_player *p, t_ray *ray, t_intersect *inter)
 	else
 		inter->x_step = -1;
 	inter->y_step = inter->x_step * tan(ray->angle);
-}
-
-void	find_hit_point(t_ray *ray, t_game *game, t_intersect *intersect)
-{
-	double	x_next;
-	double	y_next;
-	int		map_x;
-	int		map_y;
-
-	x_next = intersect->x_intersect;
-	y_next = intersect->y_intersect;
-	while (1)
-	{
-		map_x = (int)x_next;
-		if (ray->facing_left && map_x == x_next)
-			map_x--;
-		map_y = (int)(y_next);
-		if (ray->facing_up && map_y == y_next)
-			map_y--;
-		if (map_x < 0 || map_x >= MAP_WIDTH || map_y < 0 || map_y >= MAP_HEIGHT)
-			break ;
-		if (game->data.map[map_y][map_x] == 1)
-		{
-			set_values(intersect, x_next, y_next, ray);
-			break ;
-		}
-		else
-			increment_values(&x_next, &y_next, intersect);
-	}
 }

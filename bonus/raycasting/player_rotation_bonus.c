@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_rotation.c                                  :+:      :+:    :+:   */
+/*   player_rotation_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:32:43 by oukadir           #+#    #+#             */
-/*   Updated: 2025/12/16 15:40:55 by oukadir          ###   ########.fr       */
+/*   Updated: 2026/01/10 22:53:23 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,4 @@ void	rotate_left(t_player *p)
 	p->dir_y = new_diry;
 	p->plane_x = new_planex;
 	p->plane_y = new_planey;
-}
-
-int	is_movement_valid(t_game *game, double new_x, double new_y)
-{
-	double	offset;
-
-	offset = 0.2;
-	if (game->data.map[(int)(new_y + offset)][(int)(new_x + offset)] == 1)
-		return (0);
-	if (game->data.map[(int)(new_y + offset)][(int)(new_x - offset)] == 1)
-		return (0);
-	if (game->data.map[(int)(new_y - offset)][(int)(new_x - offset)] == 1)
-		return (0);
-	if (game->data.map[(int)(new_y - offset)][(int)(new_x + offset)] == 1)
-		return (0);
-	return (1);
 }

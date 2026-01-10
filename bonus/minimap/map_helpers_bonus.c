@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_helpers.c                                      :+:      :+:    :+:   */
+/*   map_helpers_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 22:15:12 by msabir            #+#    #+#             */
-/*   Updated: 2026/01/03 02:56:56 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/10 17:19:30 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	minimap_tile_color(t_game *game, int row, int col)
 	if (row < 0 || row >= game->data.map_height
 		|| col < 0 || col >= game->data.map_width)
 		return (0x1b1b1b);
-	if (game->data.map[row][col] == 1)
+	if (game->data.map[row][col] == '1')
 		return (0xdfdfdf);
 	return (0x3a3a3a);
 }

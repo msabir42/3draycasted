@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 19:47:12 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/30 00:24:14 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/10 17:19:25 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	flood_fill(int **v, t_data *d, int x, int y)
 {
 	if (x < 0 || x >= d->map_width || y < 0 || y >= d->map_height)
 		return ;
-	if (v[y][x] || d->map[y][x] == 1)
+	if (v[y][x] || d->map[y][x] == '1' || d->map[y][x] == ' ')
 		return ;
 	v[y][x] = 1;
 	flood_fill(v, d, x + 1, y);
@@ -46,7 +46,7 @@ static int	check_cells(int **v, t_data *d, int *unreachable)
 		j = 0;
 		while (j < d->map_width)
 		{
-			if (d->map[i][j] == 0 && !v[i][j])
+			if (d->map[i][j] == '0' && !v[i][j])
 			{
 				print_error("Unreachable areas in map");
 				*unreachable = 1;

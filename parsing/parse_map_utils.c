@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:00:58 by msabir            #+#    #+#             */
-/*   Updated: 2026/01/01 17:33:41 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/10 17:19:25 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	set_cell(t_data *data, int row, int col, char c)
 		data->map[row][col] = 0;
 	else if (c == '1')
 		data->map[row][col] = 1;
-	else if (c == ' ')
-		data->map[row][col] = 1;
+	else if (c == ' ' || c == '\t')
+		data->map[row][col] = 2;
 	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		if (!set_player(data, row, col, c))
@@ -66,19 +66,17 @@ static int	scan_row_chars(char *line, t_data *data, int row,
 	col = 0;
 	while (i < end && col < MAP_WIDTH)
 	{
-		if (line[i] != '\t' && line[i] != ' ')
-		{
-			if (!set_cell(data, row, col, line[i]))
-				return (0);
-			col++;
-		}
+		if (!set_cell(data, row, col, line[i]))
+			return (0);
+		col++;
 		i++;
 	}
 	if (col > data->map_width)
 		data->map_width = col;
+	data->row_lengths[row] = col;
 	while (col < MAP_WIDTH)
 	{
-		data->map[row][col] = 1;
+		data->map[row][col] = 2;
 		col++;
 	}
 	return (1);
@@ -86,12 +84,7 @@ static int	scan_row_chars(char *line, t_data *data, int row,
 
 int	parse_map_line(char *line, t_data *data, int row)
 {
-	int	i;
-
-	i = 0;
-	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
-		i++;
-	if (!scan_row_chars(line, data, row, i))
+	if (!scan_row_chars(line, data, row, 0))
 		return (0);
 	return (1);
 }

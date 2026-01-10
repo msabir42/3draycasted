@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_texture_slice.c                               :+:      :+:    :+:   */
+/*   draw_texture_slice_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 19:07:21 by oukadir           #+#    #+#             */
-/*   Updated: 2026/01/01 00:41:15 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/10 22:53:23 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static t_texture	*get_wall_texture(t_game *game, t_ray *ray)
 	if (ray->side == 0)
 	{
 		if (ray->facing_right)
-			return (&game->east_tex);
-		return (&game->west_tex);
+			return (&game->west_tex);
+		return (&game->east_tex);
 	}
 	if (ray->facing_down)
-		return (&game->south_tex);
-	return (&game->north_tex);
+		return (&game->north_tex);
+	return (&game->south_tex);
 }
 
 static int	compute_tex_x(t_texture *tex, t_ray *ray, t_intersect hit)
@@ -71,7 +71,7 @@ void	draw_textured_slice(t_game *game, int x, t_intersect hit, t_ray *ray)
 
 	if (!game || !ray)
 		return ;
-	wall_h = (SCREEN_H / ray->dist);
+	wall_h = wall_projection_height(ray);
 	param.x = x;
 	param.wall_h = sanitize_wall_height(wall_h);
 	prepare_slice_params(game, &param, hit, ray);

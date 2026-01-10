@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oukadir <oukadir@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/04 06:12:55 by msabir            #+#    #+#             */
-/*   Updated: 2026/01/04 23:23:29 by oukadir          ###   ########.fr       */
+/*   Updated: 2026/01/10 17:19:25 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_data
 	char			*east_texture_path;
 	int				floor_color;
 	int				ceiling_color;
-	int				map[MAP_HEIGHT][MAP_WIDTH];
+	char			**map;
 	int				map_width;
 	int				map_height;
 	int				player_start_x;
@@ -209,11 +209,20 @@ int				validate_rgb(int r, int g, int b);
 int				is_map_line(char *line);
 int				parse_map_line(char *line, t_data *data, int row);
 int				validate_map(t_data *data);
-int				check_closed_walls(t_data *data);
+int				check_map_walls(t_data *data);
 int				parse_map_block(char **lines, t_data *data);
 char			**sanitize(char **string);
 int				check_map_connectivity(t_data *data);
 void			cleanup_data(t_data *data);
+int				is_map_char(char c);
+int				is_player_char(char c);
+int				validate_map_chars(t_data *data);
+int				find_player(t_data *data);
+int				read_and_store_lines(int fd, char ***lines, int *count);
+void			free_lines(char **lines, int count);
+int				find_map_width(char **lines);
+void			init_grid_row(char **grid, int i, int width);
+void			copy_map_line(char *grid_line, char *file_line, int width);
 
 char			**ft_split(const char *s, char c);
 void			ft_free(char **strs, int count);

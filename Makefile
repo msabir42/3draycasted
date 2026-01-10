@@ -9,11 +9,12 @@ MLX_FLAGS		= -Lminilibx-linux -lmlx_Linux -lXext -lX11 -lm -lz
 
 PARSING_SRCS = parsing/check_wall.c \
                parsing/fetch_lines.c \
+               parsing/fetch_lines_helper.c \
                parsing/init_data.c \
                parsing/parse_colors.c \
                parsing/parse_colors_utils.c \
                parsing/parse_map.c \
-               parsing/parse_map_utils.c \
+               parsing/parse_map_split.c \
                parsing/parse_map_helpers.c \
                parsing/parse_metadata.c \
                parsing/parse_metadata_utils.c \
@@ -32,10 +33,12 @@ PARSING_SRCS = parsing/check_wall.c \
 
 RAYCASTING_SRCS = raycasting/init_environment.c \
                   raycasting/intersections.c \
+                  raycasting/intersections_helper.c \
                   raycasting/mlx_init.c \
                   raycasting/player.c \
                   raycasting/player_movement.c \
                   raycasting/player_rotation.c \
+                  raycasting/player_rotation_helper.c \
                   raycasting/raycasting.c \
                   raycasting/helpers.c
 
@@ -54,11 +57,12 @@ MANDATORY_SRCS = main.c $(PARSING_SRCS) $(RAYCASTING_SRCS) $(RENDERING_SRCS)
 BONUS_SRCS = bonus/main_bonus.c \
              bonus/parsing/check_wall_bonus.c \
              bonus/parsing/fetch_lines_bonus.c \
+             bonus/parsing/fetch_lines_helper_bonus.c \
              bonus/parsing/init_data_bonus.c \
              bonus/parsing/parse_colors_bonus.c \
              bonus/parsing/parse_colors_utils_bonus.c \
              bonus/parsing/parse_map_bonus.c \
-             bonus/parsing/parse_map_utils_bonus.c \
+             bonus/parsing/parse_map_split_bonus.c \
              bonus/parsing/parse_map_helpers_bonus.c \
              bonus/parsing/parse_metadata_bonus.c \
              bonus/parsing/parse_metadata_utils_bonus.c \
@@ -76,10 +80,12 @@ BONUS_SRCS = bonus/main_bonus.c \
              bonus/parsing/debug_bonus.c \
              bonus/raycasting/init_environment_bonus.c \
              bonus/raycasting/intersections_bonus.c \
+             bonus/raycasting/intersections_helper_bonus.c \
              bonus/raycasting/mlx_init_bonus.c \
              bonus/raycasting/player_bonus.c \
              bonus/raycasting/player_movement_bonus.c \
              bonus/raycasting/player_rotation_bonus.c \
+             bonus/raycasting/player_rotation_helper_bonus.c \
              bonus/raycasting/raycasting_bonus.c \
              bonus/raycasting/helpers_bonus.c \
              bonus/raycasting/mouse_bonus.c \

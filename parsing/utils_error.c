@@ -6,7 +6,7 @@
 /*   By: msabir <msabir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 03:01:11 by msabir            #+#    #+#             */
-/*   Updated: 2025/12/20 21:30:06 by msabir           ###   ########.fr       */
+/*   Updated: 2026/01/10 22:53:23 by msabir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	print_error(char *message)
 {
-	write(2, "Error\n", 6);
+	static int	error_printed = 0;
+
+	if (!error_printed)
+	{
+		write(2, "Error\n", 6);
+		error_printed = 1;
+	}
 	if (message)
 	{
 		write(2, message, ft_strlen(message));
