@@ -104,15 +104,15 @@ int	get_metadata(char *line, t_data *data)
 	if (!tokens || !tokens[0])
 	{
 		if (tokens)
-			ft_free(tokens, 2);
+			ft_free_all(tokens);
 		return (1);
 	}
 	if (!validate_metadata_format(tokens, line))
 	{
-		ft_free(tokens, 2);
+		ft_free_all(tokens);
 		return (0);
 	}
 	res = process_metadata_type(data, tokens, line);
-	ft_free(tokens, 2);
+	ft_free_all(tokens);
 	return (res);
 }

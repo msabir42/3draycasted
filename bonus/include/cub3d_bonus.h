@@ -227,6 +227,7 @@ void			copy_map_line(char *grid_line, char *file_line, int width);
 
 char			**ft_split(const char *s, char c);
 void			ft_free(char **strs, int count);
+void			ft_free_all(char **arr);
 int				ft_atoi(const char *str);
 void			*ft_calloc(size_t count, size_t size);
 void			ft_bzero(void *s, size_t n);
@@ -235,6 +236,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t			ft_strlen(const char *s);
 char			*ft_strdup(const char *s);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char			*ft_strtrim(char *s);
 int				rgb_to_int(int r, int g, int b);
 int				check_newline(char *s);
 int				ft_isspace(int c);

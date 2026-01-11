@@ -12,9 +12,40 @@
 
 #include "../include/cub3d.h"
 
-int	ft_isspace(int c)
+static char	*copy_trimmed(char *s, int start, int len)
 {
-	return ((c >= 9 && c <= 13) || c == ' ');
+	char	*result;
+	int		i;
+
+	result = malloc(len + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		result[i] = s[start + i];
+		i++;
+	}
+	result[len] = '\0';
+	return (result);
+}
+
+char	*ft_strtrim(char *s)
+{
+	int		start;
+	int		end;
+	int		len;
+
+	if (!s)
+		return (NULL);
+	start = 0;
+	while (s[start] && ft_isspace(s[start]))
+		start++;
+	end = ft_strlen(s) - 1;
+	while (end > start && ft_isspace(s[end]))
+		end--;
+	len = end - start + 1;
+	return (copy_trimmed(s, start, len));
 }
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)

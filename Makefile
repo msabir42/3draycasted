@@ -13,6 +13,7 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/init_data.c \
                parsing/parse_colors.c \
                parsing/parse_colors_utils.c \
+               parsing/parse_colors_utils2.c \
                parsing/parse_map.c \
                parsing/parse_map_split.c \
                parsing/parse_map_helpers.c \
@@ -21,6 +22,7 @@ PARSING_SRCS = parsing/check_wall.c \
                parsing/utils_error.c \
                parsing/utils_sanitize.c \
                parsing/utils_string.c \
+               parsing/utils_string2.c \
                parsing/validate_map.c \
                parsing/utils_split.c \
                parsing/utils_gnl.c \
@@ -61,6 +63,7 @@ BONUS_SRCS = bonus/main_bonus.c \
              bonus/parsing/init_data_bonus.c \
              bonus/parsing/parse_colors_bonus.c \
              bonus/parsing/parse_colors_utils_bonus.c \
+             bonus/parsing/parse_colors_utils2_bonus.c \
              bonus/parsing/parse_map_bonus.c \
              bonus/parsing/parse_map_split_bonus.c \
              bonus/parsing/parse_map_helpers_bonus.c \
@@ -69,6 +72,7 @@ BONUS_SRCS = bonus/main_bonus.c \
              bonus/parsing/utils_error_bonus.c \
              bonus/parsing/utils_sanitize_bonus.c \
              bonus/parsing/utils_string_bonus.c \
+             bonus/parsing/utils_string2_bonus.c \
              bonus/parsing/validate_map_bonus.c \
              bonus/parsing/utils_split_bonus.c \
              bonus/parsing/utils_gnl_bonus.c \
